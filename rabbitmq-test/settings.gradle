@@ -1,0 +1,5 @@
+rootProject.name = 'rabbitmq-test'
+include 'producer'
+include 'consumer1'
+include 'consumer2'
+

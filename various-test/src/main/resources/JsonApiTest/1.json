@@ -1,0 +1,29 @@
+{
+  "a": 1,
+  "b": 2,
+  "c": 3,
+  "data": [4, 5, 6],
+  "string": "lv1String",
+  "level1": {
+    "level2": {
+      "level3": {
+        "inner": "innerData"
+      }
+    }
+  },
+  "array": [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+  ],
+  "array2": [
+    {
+      "key1": "obj1",
+      "key2": "obj1",
+      "key3": null
+    }, {
+      "key1": "obj2",
+      "key2": "obj2"
+    }
+  ]
+}

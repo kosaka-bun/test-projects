@@ -1,0 +1,8 @@
+### get count
+GET {{gateway}}/product/count?name=TestProduct
+
+### order
+POST {{gateway}}/product/buy
+Content-Type: application/x-www-form-urlencoded
+
+userId=1&productId=1

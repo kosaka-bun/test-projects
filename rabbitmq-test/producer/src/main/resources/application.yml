@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  rabbitmq:
+    host: vm.honoka.de
+    port: 5672
+    virtual-host: /rabbitmq-test
+    username: admin
+    password: admin

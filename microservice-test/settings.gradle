@@ -1,0 +1,6 @@
+rootProject.name = 'microservice-test'
+include 'gateway'
+include 'product'
+include 'order'
+include 'feign-gateway'
+

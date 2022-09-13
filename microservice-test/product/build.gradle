@@ -1,0 +1,10 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.3.4'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'com.alibaba:druid-spring-boot-starter:1.1.22'
+    runtimeOnly 'mysql:mysql-connector-java'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.redisson:redisson-spring-boot-starter:3.17.0'
+}

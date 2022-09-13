@@ -1,0 +1,50 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: microservice-test-product
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://vm.honoka.de:3306/microservice_test_product?\
+          serverTimezone=GMT%2B8&rewriteBatchedStatements=true"
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    host: vm.honoka.de
+    port: 6379
+    password: root
+    database: 0
+  cloud:
+    nacos:
+      discovery:
+        server-addr: vm.honoka.de:8848
+  rabbitmq:
+    host: vm.honoka.de
+    port: 5672
+    virtual-host: /microservice-test
+    username: admin
+    password: admin
+    listener:
+      simple:
+        # 每个Listener容器将开启多少个线程去处理消息
+        concurrency: 2
+        # 每个线程一次拉取多少条消息到内存中缓存
+        prefetch: 5
+        # 设置消费响应模式：none, auto, manual
+        # 默认为auto
+        acknowledge-mode: auto
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/*.xml

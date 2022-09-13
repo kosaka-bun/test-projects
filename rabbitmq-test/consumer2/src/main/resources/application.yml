@@ -1,0 +1,12 @@
+spring:
+  rabbitmq:
+    host: vm.honoka.de
+    port: 5672
+    virtual-host: /rabbitmq-test
+    username: admin
+    password: admin
+    listener:
+      simple:
+        concurrency: 1
+        prefetch: 5
+        acknowledge-mode: manual

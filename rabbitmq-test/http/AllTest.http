@@ -1,0 +1,8 @@
+### init
+GET {{producer}}/init
+
+### publish
+POST {{producer}}/publish
+Content-Type: application/x-www-form-urlencoded
+
+msg=test%20message&num=3

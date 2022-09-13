@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.honoka.test.microservice.product.dao.ProductDao">
+    <sql id="BaseColumnList">
+        id, `name`, `count`
+    </sql>
+    <select id="findByName" resultType="de.honoka.test.microservice.product.entity.Product">
+        select <include refid="BaseColumnList" /> from product
+        where `name` = #{name}
+    </select>
+    <select id="selectForUpdate" resultType="de.honoka.test.microservice.product.entity.Product">
+        select <include refid="BaseColumnList" /> from product
+        where id = #{id} for update
+    </select>
+    <update id="setCount">
+        update product set `count` = #{count} where id = #{id}
+    </update>
+    <delete id="clear">
+        delete from product where 1 = 1
+    </delete>
+</mapper>

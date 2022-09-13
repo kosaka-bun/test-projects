@@ -1,0 +1,69 @@
+buildscript {
+    ext {
+        springCloudVersion = '2021.0.3'
+        springCloudAlibabaVersion = '2.2.8.RELEASE'
+        kotlinVersion = '1.6.21'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.7.1' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+    id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion" apply false
+    id 'org.jetbrains.kotlin.plugin.spring' version "$kotlinVersion" apply false
+}
+
+group = 'de.honoka.test'
+version = '1.0-SNAPSHOT'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+    apply plugin: 'org.jetbrains.kotlin.plugin.spring'
+
+    group = rootProject.group
+    version = rootProject.version
+    sourceCompatibility = '11'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:" +
+                    "$springCloudVersion"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:" +
+                    "$springCloudAlibabaVersion"
+        }
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+        implementation 'org.jetbrains.kotlin:kotlin-reflect'
+        implementation 'de.honoka.sdk:honoka-utils:1.0'
+        implementation 'com.alibaba:fastjson:2.0.7'
+        implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+        implementation('com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery') {
+            exclude group: 'org.springframework.cloud',
+                    module: 'spring-cloud-starter-netflix-ribbon'
+        }
+
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    tasks.withType(Test) {
+        useJUnitPlatform()
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = sourceCompatibility
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = sourceCompatibility
+    }
+}

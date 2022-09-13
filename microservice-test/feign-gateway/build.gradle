@@ -1,0 +1,6 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+}

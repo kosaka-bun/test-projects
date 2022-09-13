@@ -1,0 +1,26 @@
+spring:
+  rabbitmq:
+    host: vm.honoka.de
+    port: 5672
+    virtual-host: /rabbitmq-test
+    username: admin
+    password: admin
+    listener:
+      simple:
+        # 每个Listener容器将开启多少个线程去处理消息
+        concurrency: 2
+        # 每个线程一次拉取多少条消息到内存中缓存
+        prefetch: 5
+        # 设置消费响应模式：none, auto, manual
+        # 默认为auto
+        # region
+        # none模式下，只要客户端收到了消息，就会自动返回ack，因此无论发生什么情况，
+        # 消息都不会再返回队列中
+        #
+        # auto模式下，lisenter方法正常返回时，向rabbitMQ服务端返回ack，
+        # 抛出异常时返回nack，连接非正常关闭时，未返回ack还是nack的信息会重新回到队列中
+        #
+        # manual模式下，必须手动通过channel向rabbitMQ服务报告消息是否ack，
+        # 如果不报告，消息将在客户端与服务端的连接关闭后，重新进入队列中
+        # endregion
+        acknowledge-mode: manual

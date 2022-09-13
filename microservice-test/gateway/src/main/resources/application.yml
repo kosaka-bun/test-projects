@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: microservice-test-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: vm.honoka.de:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+          # 路由配置的名称，必须保证在本应用中唯一
+        - id: product
+          # 要将请求路由到的URI（lb表示负载均衡）
+          uri: lb://microservice-test-product
+          # 匹配条件，当本应用收到的请求满足条件时，将使用这个路由规则进行转发
+          predicates:
+            # 限定路径条件
+            - Path=/product/**
+          filters:
+            # 代理时，去掉本应用所收到的uri的前几个部分
+            # 如：本应用收到/product/hello的请求，若不设置此参数，网关将会将收到的请求
+            # 代理到指定微服务的/product/hello路径下
+            # （server:8080/product/hello → server:8081/product/hello）
+            #
+            # 若设置StripPrefix=1，则将会把请求代理到指定微服务的/hello路径下，去掉了
+            # 原本路径的前1个部分
+            # （server:8080/product/hello → server:8081/hello）
+            # - StripPrefix=1
+        - id: order
+          uri: lb://microservice-test-order
+          predicates:
+            - Path=/order/**

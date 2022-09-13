@@ -1,0 +1,48 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.1' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21' apply false
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21' apply false
+}
+
+group = 'de.honoka.test'
+version = '1.0-SNAPSHOT'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+    apply plugin: 'org.jetbrains.kotlin.plugin.spring'
+
+    group = rootProject.group
+    version = rootProject.version
+    sourceCompatibility = '11'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-amqp'
+        implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+        implementation 'org.jetbrains.kotlin:kotlin-reflect'
+        implementation 'com.alibaba:fastjson:2.0.7'
+        implementation 'de.honoka.sdk:honoka-utils:1.0'
+
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    }
+
+    tasks.withType(Test) {
+        useJUnitPlatform()
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "$sourceCompatibility"
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "$sourceCompatibility"
+    }
+}

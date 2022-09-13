@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: microservice-test-feign-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: vm.honoka.de:8848
+    sentinel:
+      # 是否立即将服务注册到sentinel控制台
+      eager: true
+      transport:
+        # sentinel控制台的主机与端口
+        dashboard: vm.honoka.de:8719
+        # 当前应用提供给sentinel控制台的，使之能够主动访问到本服务的sentinel框架的端口
+        # 若此端口已被占用，将从此端口号开始，依次向下查找，直到找到有用的端口号
+        port: 10000
+
+feign:
+  sentinel:
+    enabled: true
+
+# sentinel提供了一个对本应用的sentinel运行情况进行监测的接口
+# 需要本应用暴露监测端点才能访问到
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

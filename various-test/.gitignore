@@ -2,3 +2,5 @@
 build/
 target/
 .gradle/
+
+/src/main/java/de/honoka/test/various/test/leetcode/

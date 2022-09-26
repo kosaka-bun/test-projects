@@ -1,6 +1,5 @@
 package de.honoka.test.various.old.p3;
 
-import de.honoka.test.various.util.ConsoleWindowTest;
 import lombok.SneakyThrows;
 
 import javax.swing.*;
@@ -11,47 +10,13 @@ import java.awt.*;
 import java.util.UUID;
 
 public class JTextPaneTest {
-	
-	public static void main(String[] args) {
-		test2();
-	}
-	
-	@SneakyThrows
-	static void test2() {
-		//region init
-		ConsoleWindowTest cwt = new ConsoleWindowTest("Test");
-		cwt.setAutoScroll(true);
-		cwt.setScreenZoomScale(1.25);
-		cwt.show();
-		//endregion
-		for(int i = 260; i >= 1; i--) {
-			//String str = i + "\t" + UUID.randomUUID() + "\n\t" + UUID.randomUUID();
-			String str = i + "\t" + UUID.randomUUID();
-			if(i % 2 == 0)
-				System.out.println(str);
-			else
-				System.err.println(str);
-			Thread.sleep(10);
-		}
-		//String[] strs = {
-		//		"格式文本",
-		//		"特↑殊↓字←符→",
-		//		"абвгдеёжзийклмнопрстуфх",
-		//		"△▽○◇□☆▷◁♤♡♢♧♣♦♥♠◀▶★■◆●▼▲",
-		//		"☼☽♀☺◐☑√✔☜☝☞㏂㏘☛☟☚✘×☒◑☹♂☾☀▪•‥…∷※♩♫♪♬§♭♯♮㈱↖↑↗→㊣←↙↓↘",
-		//		"あいうえおかきくけこアイウエオカキクケコ"
-		//};
-		//for(String s : strs) {
-		//	System.out.println(s);
-		//}
-	}
-	
+
 	@SneakyThrows
 	static void test1() {
 		JFrame frame = new JFrame();
 		JTextPane textPane = new JTextPane();
 		JScrollPane scrollPane = new JScrollPane();
-		
+
 		//region textPane
 		textPane.setBackground(Color.BLACK);
 		textPane.setForeground(Color.LIGHT_GRAY);
@@ -75,7 +40,7 @@ public class JTextPaneTest {
 		frame.setLocationRelativeTo(null);
 		//endregion
 		frame.setVisible(true);
-		
+
 		//文档
 		StyledDocument doc = textPane.getStyledDocument();
 		doc.insertString(doc.getLength(), "普通文本\n", new SimpleAttributeSet());

@@ -2,7 +2,7 @@ package de.honoka.test.various.old.p3;
 
 import com.sobte.cqp.jcq.message.ActionCode;
 import com.sobte.cqp.jcq.message.CoolQCode;
-import de.honoka.test.various.util.EmojiHelper;
+import de.honoka.sdk.util.text.EmojiHelper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,7 +22,7 @@ import java.util.List;
 import static com.sobte.cqp.jcq.event.JcqApp.CC;
 
 public class AllTest1 {
-	
+
 	//@Test
 	public void coolQCodeTest() {
 		String msg = "文本1" + CC.at(123) + "文本2" +
@@ -47,7 +47,7 @@ public class AllTest1 {
 			System.out.println(ac.get("file"));
 		}
 	}
-	
+
 	//@Test
 	public void cityWheatherQueryTest() throws Exception {
 		String url = "http://www.weather.com.cn/weather/101010100.shtml";
@@ -56,7 +56,7 @@ public class AllTest1 {
 				.selectFirst("p.wea");
 		System.out.println(weatherTag.text());
 	}
-	
+
 	//@Test
 	public void getWheatherUrlTest() throws Exception {
 		String[] urls = {
@@ -93,7 +93,7 @@ public class AllTest1 {
 			}
 		}
 	}
-	
+
 	//@Test
 	public void wheatherQueryTest() throws Exception {
 		String url = "http://www.weather.com.cn/textFC/hb.shtml";
@@ -118,7 +118,7 @@ public class AllTest1 {
 			System.out.println();
 		}
 	}
-	
+
 	public static String[] ipLocationQuery0(String ip) {
 		String urlBase = "http://ip.tool.chinaz.com/%s";
 		String url = String.format(urlBase, ip);
@@ -138,7 +138,7 @@ public class AllTest1 {
 			return null;
 		}
 	}
-	
+
 	//@Test
 	public void stringBuilderTest() {
 		long start, end;
@@ -159,7 +159,7 @@ public class AllTest1 {
 		end = System.currentTimeMillis();
 		//System.out.println(result);
 		double timeOfBuilder = (end - start) / 1000.0;
-		
+
 		//直接添加
 		start = System.currentTimeMillis();
 		String str = "";
@@ -178,29 +178,29 @@ public class AllTest1 {
 		//result = str;
 		end = System.currentTimeMillis();
 		//System.out.println(result);
-		
+
 		//输出数据
 		System.out.printf("通过Builder添加：%.2f秒\n", timeOfBuilder);
 		System.out.printf("直接添加：%.2f秒\n", (end - start) / 1000.0);
 	}
-	
+
 	//@Test
 	public void autoCloseTest() throws Exception {
 		class Util implements AutoCloseable {
 			boolean open = true;
-			
+
 			@Override
 			public void close() {
 				open = false;
 				System.out.println("已关闭：" + open);
 				throw new NullPointerException();
 			}
-			
+
 			Util() {
 				System.out.println("已开启");
 			}
 		}
-		
+
 		try (Util u = new Util()) {
 			System.out.println("Util对象开启状态：" + u.open);
 			//测试异常时是否会关闭对象
@@ -217,9 +217,9 @@ public class AllTest1 {
 			Thread.sleep(2000);
 			ae.printStackTrace();
 		}
-		
+
 	}
-	
+
 	//@Test
 	public void doubleColonTest() {
 		String[] array = new String[] {
@@ -229,13 +229,13 @@ public class AllTest1 {
 		//list.forEach(str -> System.out.println(str));
 		list.forEach(System.out::println);
 	}
-	
+
 	//@Test
 	public void utf8ToGbk() throws Exception {
 		byte[] bytes = "DLL加载成功！".getBytes(StandardCharsets.UTF_8);
 		System.out.println(new String(bytes, "GBK"));
 	}
-	
+
 	//读取指定URL的数据，另一种写法
 	//@Test
 	void test2_2() throws Exception {
@@ -250,7 +250,7 @@ public class AllTest1 {
 		}
 		System.out.println(strb.toString());
 	}
-	
+
 	//读取指定URL的数据
 	//@Test
 	void test2() throws Exception {
@@ -264,13 +264,13 @@ public class AllTest1 {
 		String str = new String(bytes, StandardCharsets.UTF_8);
 		System.out.println(str);
 	}
-	
+
 	//@Test
 	void test1() {
 		URI uri = URI.create("xxxxxxx");
 		System.out.println(uri.getQuery());
 	}
-	
+
 	//@Test
 	void emojiTest() {
 		List<String> emojis = new ArrayList<>();

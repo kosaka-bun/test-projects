@@ -1,0 +1,31 @@
+###
+GET {{base_url}}/user/all
+
+###
+POST {{base_url}}/user?num=10
+
+###
+DELETE {{base_url}}/user/all
+
+###
+GET {{base_url}}/user?numCol1=2&numCol2=8
+
+###
+GET {{base_url}}/user/scope?numCol1=3&numCol2=7
+
+###
+GET {{base_url}}/user?valid=true
+
+###
+GET {{base_url}}/user/null
+
+###
+GET {{base_url}}/user/page/2
+
+###
+POST {{base_url}}/user/2
+
+###
+GET {{base_url}}/user/num_col1/all
+
+###

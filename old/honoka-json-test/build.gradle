@@ -19,23 +19,21 @@ repositories {
 }
 
 dependencies {
-    implementation 'de.honoka.sdk:honoka-utils:1.0.2'
-    implementation 'junit:junit:4.13'
-    implementation 'net.java.dev.jna:jna:5.3.1'
-    implementation 'net.sourceforge.htmlunit:htmlunit:2.36.0'
-    implementation 'com.sobte.cqp:jcq:1.2.7'
-    implementation 'com.google.code.gson:gson:2.9.0'
-    String lombok = 'org.projectlombok:lombok:1.18.16'
-    compileOnly lombok
-    annotationProcessor lombok
-    implementation 'de.honoka.sdk:honoka-json-gson:1.0.0'
-    implementation 'de.honoka.sdk:honoka-json-fastjson:1.0.0'
+    //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     //noinspection GradlePackageVersionRange
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:" +
             "$kotlinCoroutinesVersion"
     implementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
-    implementation 'com.baomidou:mybatis-plus:3.5.2'
+    //honoka
+    implementation 'de.honoka.sdk:honoka-utils:1.0.2'
+    //implementation 'de.honoka.sdk:honoka-json-gson:1.0.1-dev'
+    implementation 'de.honoka.sdk:honoka-json-fastjson:1.0.1-dev'
+    //other
+    implementation 'junit:junit:4.13'
+    String lombok = 'org.projectlombok:lombok:1.18.16'
+    compileOnly lombok
+    annotationProcessor lombok
 }
 
 tasks.withType(Test) {

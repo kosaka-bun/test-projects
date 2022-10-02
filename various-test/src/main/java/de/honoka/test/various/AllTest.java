@@ -3,22 +3,26 @@ package de.honoka.test.various;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.Test;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
-import java.nio.channels.spi.SelectorProvider;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class AllTest {
+
+    @SuppressWarnings("all")
+    public void test24() {
+        List<RuntimeException> reList = new ArrayList<>();
+        List<?> uList = reList;
+        //List<Object> oList = reList;
+        //uList.add(new RuntimeException());
+        //RuntimeException re = uList.get(0);
+    }
 
     @SneakyThrows
     public void test23() {

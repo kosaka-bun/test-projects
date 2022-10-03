@@ -1,8 +1,10 @@
 package de.honoka.test.various;
 
+import de.honoka.sdk.util.code.ColorfulText;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.Test;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -15,13 +17,10 @@ import java.util.regex.Pattern;
 @SuppressWarnings("unused")
 public class AllTest {
 
-    @SuppressWarnings("all")
+    @Test
     public void test24() {
-        List<RuntimeException> reList = new ArrayList<>();
-        List<?> uList = reList;
-        //List<Object> oList = reList;
-        //uList.add(new RuntimeException());
-        //RuntimeException re = uList.get(0);
+        ColorfulText.of().red("red ").green("green ")
+                .blue("blue").println();
     }
 
     @SneakyThrows

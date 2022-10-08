@@ -1,0 +1,57 @@
+buildscript {
+    ext {
+        springBootVersion = '2.3.5.RELEASE'
+        kotlinVersion = '1.6.21'
+        honokaUtilsVersion = '1.0.2'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
+    id 'org.jetbrains.kotlin.plugin.spring' version "$kotlinVersion"
+}
+
+group = 'de.honoka.test'
+version = '1.0.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://www.honoka.de/maven-repo/'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "de.honoka.sdk:honoka-utils:$honokaUtilsVersion"
+    String lombok = 'org.projectlombok:lombok:1.18.16'
+    String springBootConfigurationProcessor = 'org.springframework.boot:' +
+            'spring-boot-configuration-processor'
+    compileOnly lombok, springBootConfigurationProcessor
+    annotationProcessor lombok, springBootConfigurationProcessor
+    testCompileOnly lombok
+    testAnnotationProcessor lombok
+    //Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+bootJar {
+    version ''
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = sourceCompatibility
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = sourceCompatibility
+}

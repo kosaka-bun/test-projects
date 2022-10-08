@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exe4j version="8.0.1" transformSequenceNumber="3">
+  <directoryPresets config="." />
+  <application name="exe4j-test" distributionSourceDir="." />
+  <executable name="exe4j-test" executableDir="." executableMode="console" singleInstance="true" />
+  <java mainClass="org.springframework.boot.loader.JarLauncher" vmParameters="-Dfile.encoding=UTF-8" minVersion="8" maxVersion="17">
+    <classPath>
+      <archive location="./exe4j-test.jar" failOnError="false" />
+    </classPath>
+  </java>
+</exe4j>

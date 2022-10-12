@@ -8,11 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Exe4jTest {
 
     public static void main(String[] args) {
-        ConsoleWindow window = new ConsoleWindow("Test",
-                null, () -> {});
-        window.setAutoScroll(true);
-        window.setScreenZoomScale(1.25);
-        window.show();
+        ConsoleWindow.Builder.of("Test").setOnExit(() -> {
+            System.out.println("系统退出");
+        }).setScreenZoomScale(1.25).build();
         SpringApplication.run(Exe4jTest.class, args);
     }
 }

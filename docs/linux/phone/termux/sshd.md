@@ -1,7 +1,8 @@
 # Termux安装sshd
 
 ```shell
-pkg install vim openssl openssh
+pkg install vim openssl openssl-1.1 openssh
+pkg update
 # 查看用户名，并设置密码
 whoami
 passwd

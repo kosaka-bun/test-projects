@@ -13,6 +13,19 @@ import java.util.Objects;
 public class AllTest {
 
     @Test
+    public void test7() {
+        TestUser user1 = new TestUser(1, "abc", "def");
+        TestUser user2 = new TestUser(2, "ghi", "jkl");
+        System.out.println(JsonObject.of(user1));
+        List<TestUser> userList = List.of(user1, user2);
+        JsonArray<TestUser> jsonArray = JsonArray.of(userList, TestUser.class);
+        System.out.println(jsonArray);
+        for(TestUser user : jsonArray) {
+            System.out.println(user);
+        }
+    }
+
+    //@Test
     public void test6() {
         //JsonConfig.get().setPretty(true);
         //JsonConfig.get().setCamelCase(true);

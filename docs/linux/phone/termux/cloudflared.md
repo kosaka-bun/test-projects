@@ -30,7 +30,7 @@ originRequest:
 ingress:
   # 将哪个域名穿透到内网的哪个端口
   - hostname: code-server.honoka.de
-    service: http://localhost:8080
+    service: http://localhost:8081
   # 所有规则不匹配时，访问哪个服务
   - service: http_status:404
 ```
@@ -41,3 +41,8 @@ cloudflared tunnel route dns phone xxx.honoka.de
 # 运行，测试
 cloudflared tunnel run phone
 ```
+
+## 注意事项
+Cloudflare Tunnel与Cloudflare Workers的路由冲突！
+
+如果一个URL同时匹配Tunnel的入站规则（即config.yml中的ingress），又匹配域名配置下面的Workers路由的规则，则Cloudflare会默认将这个请求转发到Workers上！调试时可能会出现不可预知的问题！

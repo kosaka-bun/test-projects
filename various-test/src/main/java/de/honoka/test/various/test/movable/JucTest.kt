@@ -4,6 +4,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.locks.ReentrantLock
 import java.util.concurrent.locks.ReentrantReadWriteLock
 
+@Suppress("UNUSED_VARIABLE")
 object JucTest {
 
     @JvmStatic

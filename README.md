@@ -3,13 +3,9 @@
 ![GitHub Stars](https://img.shields.io/github/stars/kosaka-bun/test-projects?label=Stars&logo=GitHub)
 
 ## 简介
-本仓库是一个用于存储各类个人测试代码、学习笔记与说明文档等内容的仓库。
+本仓库是一个用于存储各类个人测试代码等内容的仓库。
 
 ## 主要内容
-### 笔记
-- [AbstractQueuedSynchronizer](./docs/java/concurrent/AbstractQueuedSynchronizer/README.md)
-- [MySQL MVCC](./docs/mysql/mvcc/README.md)
-
 ### 测试项目
 - [Various Test](./various-test)（Java语言与平台的各类小测试）
 - [Kotlin Test](./old/kotlin-test)（Kotlin语言与平台的各类小测试）

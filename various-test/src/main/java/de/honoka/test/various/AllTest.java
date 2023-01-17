@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -19,6 +20,13 @@ import java.util.regex.Pattern;
 public class AllTest {
 
     @Test
+    @SneakyThrows
+    public void test25() {
+        byte[] utf8 = "\ufefftest��".getBytes(StandardCharsets.UTF_8);
+        System.out.println(new String(utf8, "GBK"));
+    }
+
+    //@Test
     public void test24() {
         URL resource = AllTest.class.getResource("/CHeader/utf8_to_gbk.h");
         System.out.println(resource);
@@ -57,6 +65,7 @@ public class AllTest {
     }
 
     //@Test
+    @SuppressWarnings("UnnecessaryUnicodeEscape")
     public void test21() {
         System.out.println("\u6d4b\u8bd5");
         Pattern pattern = Pattern.compile("\\u6d4b\\u8bd5");

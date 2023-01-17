@@ -1,0 +1,11 @@
+GET {{urlPrefix}}/test1
+
+###
+
+GET {{urlPrefix}}/test2
+
+###
+
+GET {{urlPrefix}}/test3
+
+###

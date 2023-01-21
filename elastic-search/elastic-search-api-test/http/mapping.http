@@ -1,0 +1,29 @@
+### 创建映射
+PUT {{urlPrefix}}/shopping/_mapping
+Content-Type: application/json
+
+# 请求体中的index默认为true，可以省略
+
+{
+  "properties": {
+    "title": {
+      "type": "text",
+      "index": true
+    },
+    "category": {
+      "type": "text",
+      "index": true
+    },
+    "images": {
+      "type": "text",
+      "index": true
+    },
+    "price": {
+      "type": "double",
+      "index": true
+    }
+  }
+}
+
+### 查询映射
+GET {{urlPrefix}}/shopping/_mapping

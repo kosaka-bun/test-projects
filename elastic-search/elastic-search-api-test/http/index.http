@@ -1,0 +1,14 @@
+### 查看版本
+GET {{urlPrefix}}/
+
+### 创建索引
+PUT {{urlPrefix}}/shopping
+
+### 查询索引
+GET {{urlPrefix}}/_cat/indices?v
+
+### 查看单个索引
+GET {{urlPrefix}}/shopping
+
+### 删除索引
+DELETE {{urlPrefix}}/shopping

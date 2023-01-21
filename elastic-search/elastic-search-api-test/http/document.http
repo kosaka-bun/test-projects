@@ -1,0 +1,26 @@
+### 创建文档
+POST {{urlPrefix}}/shopping/_doc/1
+Content-Type: application/json
+
+{
+  "title": "小米手机",
+  "category": "小米",
+  "images": "http://www.gulixueyuan.com/xm.jpg",
+  "price": 3999.00
+}
+
+### 查看文档
+GET {{urlPrefix}}/shopping/_doc/1
+
+### 删除文档
+DELETE {{urlPrefix}}/shopping/_doc/1
+
+### 修改字段
+POST {{urlPrefix}}/shopping/_update/1
+Content-Type: application/json
+
+{
+  "doc": {
+    "price": 2999.00
+  }
+}

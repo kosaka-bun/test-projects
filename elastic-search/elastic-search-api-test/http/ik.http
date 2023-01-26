@@ -1,0 +1,16 @@
+### 不使用分词器
+GET {{urlPrefix}}/_analyze
+Content-Type: application/json
+
+{
+  "text": "这是一段测试文本，主要用于测试IK分词器对中文文本的划分情况"
+}
+
+### 使用分词器
+GET {{urlPrefix}}/_analyze
+Content-Type: application/json
+
+{
+  "text": "这是一段测试文本，主要用于测试IK分词器对中文文本的划分情况",
+  "analyzer": "ik_max_word"
+}

@@ -35,4 +35,5 @@ http-client.private.env.json
 /.nb-gradle/
 
 ### VS Code ###
-.vscode/
+.vscode/*
+!.vscode/settings.json

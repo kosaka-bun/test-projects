@@ -1,0 +1,7 @@
+{
+    "rest-client.environmentVariables": {
+        "$shared": {
+            "urlPrefix": "http://localhost:9200"
+        }
+    }
+}

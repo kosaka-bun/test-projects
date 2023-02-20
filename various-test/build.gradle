@@ -37,11 +37,11 @@ dependencies {
     implementation 'com.baomidou:mybatis-plus:3.5.2'
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 

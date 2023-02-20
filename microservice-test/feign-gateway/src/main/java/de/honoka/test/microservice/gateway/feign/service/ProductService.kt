@@ -2,7 +2,7 @@ package de.honoka.test.microservice.gateway.feign.service
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource
 import com.alibaba.csp.sentinel.slots.block.BlockException
-import de.honoka.sdk.util.web.ApiResponse
+import de.honoka.sdk.util.framework.web.ApiResponse
 import de.honoka.test.microservice.gateway.feign.feign.ProductFeignClient
 import org.springframework.stereotype.Service
 

@@ -4,22 +4,26 @@ import com.alibaba.fastjson.JSONObject
 import de.honoka.sdk.util.text.TextUtils
 import de.honoka.test.microservice.order.dao.ProductOrderDao
 import de.honoka.test.microservice.order.entity.ProductOrder
-import de.honoka.test.microservice.order.util.ComponentHolder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.annotation.RabbitListener
+import org.springframework.context.annotation.Lazy
 import org.springframework.messaging.handler.annotation.Payload
 import org.springframework.stereotype.Service
 import java.util.*
+import javax.annotation.Resource
 import javax.transaction.Transactional
 
 @Service
 class ProductOrderService(
-    val productOrderDao: ProductOrderDao,
-    val componentHolder: ComponentHolder
+    val productOrderDao: ProductOrderDao
 ) {
 
     val log: Logger = LoggerFactory.getLogger(ProductOrderService::class.java)
+
+    @Lazy
+    @Resource
+    lateinit var productOrderService: ProductOrderService
 
     @RabbitListener(queues = ["order.queue"])
     fun createOrder(@Payload json: JSONObject) {
@@ -31,7 +35,7 @@ class ProductOrderService(
         log.info("order: user_id=${order.userId}, product_id=${order.productId}, " +
                 "order_time=${TextUtils.getSimpleDateFormat().format(
                     order.orderTime)}")
-        componentHolder.productOrderService.insert(order)
+        productOrderService.insert(order)
     }
 
     @Transactional

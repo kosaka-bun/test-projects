@@ -29,6 +29,9 @@ subprojects {
 
     repositories {
         mavenCentral()
+        maven {
+            url 'https://mirrors.honoka.de/maven-repo/'
+        }
     }
 
     dependencyManagement {
@@ -44,7 +47,8 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
         implementation 'org.jetbrains.kotlin:kotlin-reflect'
-        implementation 'de.honoka.sdk:honoka-utils:1.0'
+        implementation 'de.honoka.sdk:honoka-utils:1.0.7'
+        implementation 'de.honoka.sdk:honoka-framework-utils:1.0.1'
         implementation 'com.alibaba:fastjson:2.0.7'
         implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
         implementation('com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery') {
@@ -55,8 +59,10 @@ subprojects {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 
-    tasks.withType(Test) {
-        useJUnitPlatform()
+    tasks.withType(Test).tap {
+        configureEach {
+            useJUnitPlatform()
+        }
     }
 
     compileKotlin {

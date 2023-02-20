@@ -1,6 +1,6 @@
 package de.honoka.test.microservice.gateway.feign.controller
 
-import de.honoka.sdk.util.web.ApiResponse
+import de.honoka.sdk.util.framework.web.ApiResponse
 import de.honoka.test.microservice.gateway.feign.service.ProductService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping

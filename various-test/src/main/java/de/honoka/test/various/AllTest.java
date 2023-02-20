@@ -7,12 +7,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +19,11 @@ import java.util.regex.Pattern;
 public class AllTest {
 
     @Test
+    public void test26() {
+        System.out.println(new BigDecimal("0.1"));
+    }
+
+    //@Test
     @SneakyThrows
     public void test25() {
         byte[] utf8 = "\ufefftest��".getBytes(StandardCharsets.UTF_8);

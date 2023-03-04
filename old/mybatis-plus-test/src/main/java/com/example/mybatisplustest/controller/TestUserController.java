@@ -21,7 +21,7 @@ public class TestUserController {
     private TestUserMapper testUserMapper;
 
     @GetMapping("/all")
-    public Object findAll() {
+    public List<TestUser> findAll() {
         return testUserMapper.selectList(null);
     }
 
@@ -42,18 +42,13 @@ public class TestUserController {
     @PostMapping("/{id}")
     public void insertOne(@PathVariable Long id) {
         Random random = new Random();
-        try {
-            testUserMapper.insert(new TestUser().setId(id)
-                    .setName(UUID.randomUUID().toString().substring(0, 8))
-                    .setJoinTime(new Date(System.currentTimeMillis() +
-                            random.nextInt(10000 * 1000) - 5000 * 1000))
-                    .setNumCol1(random.nextInt(10) + 1)
-                    .setNumCol2(random.nextInt(10) + 1)
-                    .setValid(random.nextBoolean()));
-        } catch(Throwable t) {
-            t.printStackTrace();
-            throw t;
-        }
+        testUserMapper.insert(new TestUser().setId(id)
+                .setName(UUID.randomUUID().toString().substring(0, 8))
+                .setJoinTime(new Date(System.currentTimeMillis() +
+                        random.nextInt(10000 * 1000) - 5000 * 1000))
+                .setNumCol1(random.nextInt(10) + 1)
+                .setNumCol2(random.nextInt(10) + 1)
+                .setValid(random.nextBoolean()));
     }
 
     @DeleteMapping("/all")
@@ -62,12 +57,12 @@ public class TestUserController {
     }
 
     @GetMapping
-    public Object find(TestUser param) {
+    public List<TestUser> find(TestUser param) {
         return testUserMapper.selectList(new QueryWrapper<>(param));
     }
 
     @GetMapping("/scope")
-    public Object findByScope(Integer numCol1, Integer numCol2) {
+    public List<TestUser> findByScope(Integer numCol1, Integer numCol2) {
         LambdaQueryWrapper<TestUser> wrapper = new LambdaQueryWrapper<>();
         if(numCol1 != null) wrapper.le(TestUser::getNumCol1, numCol1);
         if(numCol2 != null) wrapper.gt(TestUser::getNumCol2, numCol2);
@@ -75,21 +70,20 @@ public class TestUserController {
     }
 
     @GetMapping("/null")
-    public Object findByNull() {
+    public List<TestUser> findByNull() {
         LambdaQueryWrapper<TestUser> wrapper = new LambdaQueryWrapper<>();
         wrapper.isNull(TestUser::getValid);
         return testUserMapper.selectList(wrapper);
     }
 
     @GetMapping("/page/{page}")
-    public Object findByPage(@PathVariable Integer page,
+    public Page<TestUser> findByPage(@PathVariable Integer page,
             @RequestParam(name = "ps", required = false, defaultValue = "5")
             Integer pageSize) {
-        Page<TestUser> pageObj = testUserMapper.selectPage(
+        return testUserMapper.selectPage(
                 new Page<>(page, pageSize),
                 new LambdaQueryWrapper<TestUser>()
                         .orderByDesc(TestUser::getJoinTime));
-        return pageObj;
     }
 
     @GetMapping("/num_col1/all")

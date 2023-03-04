@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplustest.mapper.NumberEntityMapper">
+    <sql id="Base_Column_List">
+        id, integer_col, decimal_col
+    </sql>
+    <update id="update">
+        update number_entity
+        <set>
+            <if test="integer != null">
+                integer_col = #{integer},
+            </if>
+            <if test="decimal != null">
+                decimal_col = #{decimal}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

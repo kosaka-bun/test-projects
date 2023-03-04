@@ -1,0 +1,18 @@
+###
+GET {{base_url}}/number_entity/all
+
+###
+POST {{base_url}}/number_entity
+Content-Type: application/x-www-form-urlencoded
+
+integer=2&decimal=0.2
+
+###
+PUT {{base_url}}/number_entity/1
+Content-Type: application/x-www-form-urlencoded
+
+#integer=0&decimal=0
+integer=1
+
+###
+DELETE {{base_url}}/number_entity/2

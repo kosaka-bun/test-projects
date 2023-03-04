@@ -4,10 +4,8 @@ import de.honoka.sdk.util.code.CodeUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.Test;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -17,11 +15,6 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class AllTest {
-
-    @Test
-    public void test26() {
-        System.out.println(new BigDecimal("0.1"));
-    }
 
     //@Test
     @SneakyThrows

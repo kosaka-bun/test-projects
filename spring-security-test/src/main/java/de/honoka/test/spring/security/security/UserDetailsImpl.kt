@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 class UserDetailsImpl(
-    private val user: User
+    val user: User
 ) : UserDetails {
 
     private val encoder = BCryptPasswordEncoder()

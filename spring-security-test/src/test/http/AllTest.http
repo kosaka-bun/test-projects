@@ -1,0 +1,4 @@
+GET {{base_url}}/user/all
+
+###
+POST {{base_url}}/user

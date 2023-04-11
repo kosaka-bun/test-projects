@@ -1,0 +1,57 @@
+//file:noinspection GrUnresolvedAccess
+
+buildscript {
+    ext {
+        kotlinVersion = '1.6.21'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.6.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
+    id 'org.jetbrains.kotlin.plugin.spring' version "$kotlinVersion"
+}
+
+group = 'de.honoka.test'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    maven {
+        url 'https://maven.aliyun.com/repository/central'
+    }
+    mavenCentral()
+    maven {
+        url 'https://mirrors.honoka.de/maven-repo/'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2'
+    //runtimeOnly 'mysql:mysql-connector-java'
+    //implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
+    implementation 'de.honoka.sdk:honoka-utils:1.0.7'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.3.4'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.withType(Test).tap {
+    configureEach {
+        useJUnitPlatform()
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = sourceCompatibility
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = sourceCompatibility
+}

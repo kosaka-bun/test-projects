@@ -1,0 +1,10 @@
+GET {{base_url}}/hello
+
+###
+POST {{base_url}}/entity/add
+Content-Type: application/x-www-form-urlencoded
+
+count=10
+
+###
+GET {{base_url}}/entity/all

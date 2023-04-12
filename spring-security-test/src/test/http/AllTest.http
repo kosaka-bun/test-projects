@@ -1,5 +1,5 @@
 GET {{base_url}}/user/all
-Authorization: token a51503ce-3091-498e-9563-29a6c41c8ac7
+Authorization: token {{token}}
 
 ###
 POST {{base_url}}/user
@@ -12,8 +12,8 @@ username=user-850&password=abc123456
 
 ###
 GET {{base_url}}/hello
-Authorization: token a51503ce-3091-498e-9563-29a6c41c8ac7
+Authorization: token {{token}}
 
 ###
 POST {{base_url}}/user/logout
-Authorization: token a51503ce-3091-498e-9563-29a6c41c8ac7
+Authorization: token {{token}}

@@ -1,6 +1,5 @@
 package de.honoka.test.spring.security.security
 
-import de.honoka.test.spring.security.dao.UserDao
 import de.honoka.test.spring.security.entity.User
 import de.honoka.test.spring.security.util.Utils
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -12,9 +11,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class LoginFilter(
-    private val userDao: UserDao
-) : OncePerRequestFilter() {
+class LoginFilter : OncePerRequestFilter() {
 
     override fun doFilterInternal(
         request: HttpServletRequest,

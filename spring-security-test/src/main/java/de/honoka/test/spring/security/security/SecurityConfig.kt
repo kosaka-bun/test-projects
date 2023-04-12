@@ -10,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import kotlin.apply as kotlinApply
 
 @EnableWebSecurity
 @Configuration
@@ -18,23 +19,25 @@ class SecurityConfig(
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
-        http.csrf().disable()
+        http.kotlinApply {
+            //关闭csrf
+            csrf().disable()
             //不通过Session获取SecurityContext
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+            sessionManagement().sessionCreationPolicy(
+                SessionCreationPolicy.STATELESS)
             //配置请求认证逻辑
-            .authorizeRequests()
-            //对于登录接口，允许匿名访问
-            .antMatchers("/user/login").anonymous()
-            //除上面外的所有请求全部需要鉴权认证
-            .anyRequest().authenticated()
-            .and()
+            authorizeRequests().kotlinApply {
+                //对于登录接口，允许匿名访问
+                antMatchers("/user/login").anonymous()
+                //除上面外的所有请求全部需要鉴权认证
+                anyRequest().authenticated()
+            }
             //添加过滤器
-            .addFilterBefore(
+            addFilterBefore(
                 loginFilter,
                 UsernamePasswordAuthenticationFilter::class.java
             )
+        }
     }
 
     @Bean

@@ -9,7 +9,7 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.6.0'
+    id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
     id 'org.jetbrains.kotlin.plugin.spring' version "$kotlinVersion"
@@ -34,10 +34,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch:2.7.5'
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.h2database:h2:1.4.200'
     //runtimeOnly 'mysql:mysql-connector-java'
     //implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.3.4'
@@ -48,8 +48,9 @@ dependencies {
             "$elasticSearchVersion"
     implementation 'org.elasticsearch.client:elasticsearch-rest-client:' +
             "$elasticSearchVersion"
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    String lombok = "org.projectlombok:lombok"
+    compileOnly lombok
+    annotationProcessor lombok
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

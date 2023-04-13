@@ -28,3 +28,10 @@ data class TestEntity(
     @Field(type = FieldType.Text, analyzer = "ik_smart")
     var text: String? = null
 )
+
+data class TestEntityVo(
+
+    var content: TestEntity? = null,
+
+    var highlightFields: Map<String, List<String>>? = null
+)

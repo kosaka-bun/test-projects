@@ -14,3 +14,12 @@ GET {{base_url}}/es/entity/all
 
 ###
 GET {{base_url}}/es/entity/int?intCol=12
+
+###
+GET {{base_url}}/es/entity/keyword?keyword=葡萄
+
+###
+GET {{base_url}}/es/entity/text?keyword=苹果乌梅
+
+###
+GET {{base_url}}/es/entity/text?keyword=果乌

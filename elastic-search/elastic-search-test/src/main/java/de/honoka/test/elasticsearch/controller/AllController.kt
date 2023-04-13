@@ -6,9 +6,10 @@ import de.honoka.sdk.util.file.FileUtils
 import de.honoka.test.elasticsearch.dao.TestEntityDao
 import de.honoka.test.elasticsearch.dao.TestEntityEsDao
 import de.honoka.test.elasticsearch.entity.TestEntity
+import de.honoka.test.elasticsearch.entity.TestEntityVo
+import de.honoka.test.elasticsearch.service.TestEntityService
 import org.elasticsearch.index.query.QueryBuilders
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -17,9 +18,9 @@ import javax.transaction.Transactional
 
 @RestController
 class AllController(
+    private val testEntityService: TestEntityService,
     private val testEntityDao: TestEntityDao,
-    private val testEntityEsDao: TestEntityEsDao,
-    private val elasticsearchTemplate: ElasticsearchRestTemplate
+    private val testEntityEsDao: TestEntityEsDao
 ) {
 
     val fruitList: JsonArray<String> = JsonArray.of(FileUtils.urlToString(
@@ -60,12 +61,26 @@ class AllController(
 
     @GetMapping("/es/entity/int")
     fun queryIntCol(intCol: Int): List<TestEntity> {
-        return elasticsearchTemplate.search(NativeSearchQueryBuilder().apply {
-            withQuery(QueryBuilders.boolQuery().apply {
-                must(QueryBuilders.termQuery("intCol", intCol))
+        return testEntityService.esQuery({
+            must(QueryBuilders.termQuery("intCol", intCol))
+        }).map { it.content }
+    }
+
+    @GetMapping("/es/entity/keyword")
+    fun queryKeyword(keyword: String): List<TestEntity> {
+        return testEntityService.esQuery({
+            must(QueryBuilders.termQuery("keyword", keyword))
+        }).map { it.content }
+    }
+
+    @GetMapping("/es/entity/text")
+    fun queryText(keyword: String): List<TestEntityVo> {
+        return testEntityService.esQuery({
+            must(QueryBuilders.matchQuery("text", keyword))
+        }, {
+            withHighlightFields(HighlightBuilder.Field("text").apply {
+                preTags("<font>").postTags("</font>")
             })
-        }.build(), TestEntity::class.java).searchHits.map {
-            it.content
-        }
+        }).map { TestEntityVo(it.content, it.highlightFields) }
     }
 }

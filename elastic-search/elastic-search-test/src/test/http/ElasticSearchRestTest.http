@@ -1,0 +1,11 @@
+### 查询索引
+GET {{es_base_url}}/_cat/indices?v
+
+### 查看单个索引
+GET {{es_base_url}}/{{index_name}}
+
+### 删除索引
+DELETE {{es_base_url}}/{{index_name}}
+
+### 查询映射
+GET {{es_base_url}}/{{index_name}}/_mapping

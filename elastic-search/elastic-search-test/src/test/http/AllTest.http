@@ -8,3 +8,9 @@ count=10
 
 ###
 GET {{base_url}}/entity/all
+
+###
+GET {{base_url}}/es/entity/all
+
+###
+GET {{base_url}}/es/entity/int?intCol=12

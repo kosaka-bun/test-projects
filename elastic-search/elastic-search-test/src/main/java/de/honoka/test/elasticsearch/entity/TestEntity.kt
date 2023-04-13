@@ -25,6 +25,6 @@ data class TestEntity(
     @Field(type = FieldType.Keyword)
     var keyword: String? = null,
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, analyzer = "ik_smart")
     var text: String? = null
 )

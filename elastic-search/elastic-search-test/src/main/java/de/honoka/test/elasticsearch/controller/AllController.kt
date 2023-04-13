@@ -6,6 +6,10 @@ import de.honoka.sdk.util.file.FileUtils
 import de.honoka.test.elasticsearch.dao.TestEntityDao
 import de.honoka.test.elasticsearch.dao.TestEntityEsDao
 import de.honoka.test.elasticsearch.entity.TestEntity
+import org.elasticsearch.index.query.QueryBuilders
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
@@ -14,7 +18,8 @@ import javax.transaction.Transactional
 @RestController
 class AllController(
     private val testEntityDao: TestEntityDao,
-    private val testEntityEsDao: TestEntityEsDao
+    private val testEntityEsDao: TestEntityEsDao,
+    private val elasticsearchTemplate: ElasticsearchRestTemplate
 ) {
 
     val fruitList: JsonArray<String> = JsonArray.of(FileUtils.urlToString(
@@ -43,8 +48,24 @@ class AllController(
         }
     }
 
-    @RequestMapping("/entity/all")
+    @GetMapping("/entity/all")
     fun findAll(): List<TestEntity> {
         return testEntityDao.selectList(null)
+    }
+
+    @GetMapping("/es/entity/all")
+    fun esFindAll(): List<TestEntity> {
+        return testEntityEsDao.findAll().toList()
+    }
+
+    @GetMapping("/es/entity/int")
+    fun queryIntCol(intCol: Int): List<TestEntity> {
+        return elasticsearchTemplate.search(NativeSearchQueryBuilder().apply {
+            withQuery(QueryBuilders.boolQuery().apply {
+                must(QueryBuilders.termQuery("intCol", intCol))
+            })
+        }.build(), TestEntity::class.java).searchHits.map {
+            it.content
+        }
     }
 }

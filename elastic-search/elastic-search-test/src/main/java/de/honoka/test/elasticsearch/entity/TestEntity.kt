@@ -6,8 +6,6 @@ import org.springframework.data.elasticsearch.annotations.Document
 import org.springframework.data.elasticsearch.annotations.Field
 import org.springframework.data.elasticsearch.annotations.FieldType
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Document(indexName = "elastic-search-test.test_entity")
@@ -15,8 +13,7 @@ import javax.persistence.Id
 data class TestEntity(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     var id: Int? = null,
 
     @Field(type = FieldType.Integer)

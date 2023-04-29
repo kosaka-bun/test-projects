@@ -13,13 +13,19 @@ GET {{base_url}}/entity/all
 GET {{base_url}}/es/entity/all
 
 ###
+DELETE {{base_url}}/entity/all
+
+###
+DELETE {{base_url}}/es/entity/all
+
+###
 GET {{base_url}}/es/entity/int?intCol=12
 
 ###
-GET {{base_url}}/es/entity/keyword?keyword=葡萄
+GET {{base_url}}/es/entity/keyword?keyword=橘子
 
 ###
-GET {{base_url}}/es/entity/text?keyword=苹果乌梅
+GET {{base_url}}/es/entity/text?keyword=桃子香蕉
 
 ###
-GET {{base_url}}/es/entity/text?keyword=果乌
+GET {{base_url}}/es/entity/text?keyword=果芒

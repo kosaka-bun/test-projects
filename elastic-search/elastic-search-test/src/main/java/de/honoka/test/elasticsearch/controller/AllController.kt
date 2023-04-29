@@ -1,6 +1,5 @@
 package de.honoka.test.elasticsearch.controller
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import de.honoka.sdk.json.api.JsonArray
 import de.honoka.sdk.json.api.JsonObject
 import de.honoka.sdk.util.file.FileUtils
@@ -64,6 +63,11 @@ class AllController(
     @DeleteMapping("/entity/all")
     fun deleteAll() {
         testEntityDao.deleteAll()
+    }
+
+    @DeleteMapping("/es/entity/all")
+    fun esDeleteAll() {
+        testEntityEsDao.deleteAll()
     }
 
     @GetMapping("/es/entity/int")

@@ -21,7 +21,7 @@ public class JniTest {
 	public native void messageInC(String arg);
 	
 	@Test
-	public void main() {
+	public void test() {
 		messageInC("hello");
 	}
 }

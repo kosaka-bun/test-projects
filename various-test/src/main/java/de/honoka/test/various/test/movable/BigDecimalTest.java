@@ -25,7 +25,7 @@ public class BigDecimalTest {
     }
 
     @Test
-    public void main() {
+    public void test() {
         halfUp();
         printAll();
     }

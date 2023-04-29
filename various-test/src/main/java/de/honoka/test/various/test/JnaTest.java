@@ -19,7 +19,7 @@ public class JnaTest {
 	}
 
 	@Test
-	public void main() {
+	public void test() {
 		JnaLibrary jl = JnaLibrary.impl;
 		jl.message();
 		

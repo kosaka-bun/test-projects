@@ -1,5 +1,6 @@
 package de.honoka.test.elasticsearch.controller
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import de.honoka.sdk.json.api.JsonArray
 import de.honoka.sdk.json.api.JsonObject
 import de.honoka.sdk.util.file.FileUtils
@@ -10,6 +11,7 @@ import de.honoka.test.elasticsearch.entity.TestEntityVo
 import de.honoka.test.elasticsearch.service.TestEntityService
 import org.elasticsearch.index.query.QueryBuilders
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -57,6 +59,11 @@ class AllController(
     @GetMapping("/es/entity/all")
     fun esFindAll(): List<TestEntity> {
         return testEntityEsDao.findAll().toList()
+    }
+
+    @DeleteMapping("/entity/all")
+    fun deleteAll() {
+        testEntityDao.deleteAll()
     }
 
     @GetMapping("/es/entity/int")

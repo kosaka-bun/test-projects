@@ -2,6 +2,7 @@ package de.honoka.test.spring.security.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -31,7 +32,9 @@ class SecurityConfig(
                 SessionCreationPolicy.STATELESS)
             //配置请求认证逻辑
             authorizeRequests().kotlinApply {
-                //对于登录接口，允许匿名访问
+                //允许注册
+                antMatchers(HttpMethod.POST, "/user").permitAll()
+                //对于登录接口，允许匿名访问，不允许在有token的情况下访问
                 /*
                  * 即，在到达这个接口前，若SpringContextHolder的context中有
                  * authentication，则抛出AccessDeniedException，禁止这一请求

@@ -42,11 +42,11 @@ class UserController(
     fun login(username: String?, password: String?): JsonObject {
         //使用Authentication的实现类
         //手动调用方法去认证，会自动调用UserDetailsService查，然后对比
+        //如果认证失败，该方法会抛出异常，并使请求进入AuthenticationEntryPointImpl类中
         val authentication: Authentication? = authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(username, password)
         )
-        authentication ?: return JsonObject.of().add("msg", "用户名或密码错误")
-        val userDetails = authentication.principal as UserDetailsImpl
+        val userDetails = authentication?.principal as UserDetailsImpl
         return JsonObject.of().add("token", UUID.randomUUID().toString().also {
             LoginCache.tokenUserMap[it] = userDetails.user
         })

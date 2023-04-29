@@ -37,10 +37,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    runtimeOnly 'com.h2database:h2:1.4.200'
-    //runtimeOnly 'mysql:mysql-connector-java'
-    //implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
+    runtimeOnly 'org.xerial:sqlite-jdbc'
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.3.4'
+    implementation 'org.hibernate:hibernate-community-dialects:6.1.7.Final'
     implementation 'de.honoka.sdk:honoka-utils:1.0.7'
     implementation 'de.honoka.sdk:honoka-json-gson:1.1.3'
     implementation "org.elasticsearch:elasticsearch:$elasticSearchVersion"

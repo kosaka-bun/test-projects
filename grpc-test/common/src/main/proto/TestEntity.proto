@@ -1,0 +1,14 @@
+//使用proto3语法，未指定则使用proto2
+syntax = "proto3";
+
+package de.honoka.test.grpc.common;
+
+option java_package = "de.honoka.test.grpc.common";
+option java_outer_classname = "TestEntity";
+
+message TestEntity0 {
+  //自身属性
+  int32 id = 1;
+  string code = 2;
+  string name = 3;
+}

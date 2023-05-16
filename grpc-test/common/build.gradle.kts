@@ -10,5 +10,4 @@ protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.22.2"
     }
-    generatedFilesBaseDir = "$projectDir/build/generated/sources/protobuf/"
 }

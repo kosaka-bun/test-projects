@@ -3,10 +3,7 @@ syntax = "proto3";
 
 package de.honoka.test.grpc.common;
 
-option java_package = "de.honoka.test.grpc.common";
-option java_outer_classname = "TestEntity";
-
-message TestEntity0 {
+message TestEntity {
   //自身属性
   int32 id = 1;
   string code = 2;

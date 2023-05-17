@@ -1,11 +1,22 @@
 //使用proto3语法，未指定则使用proto2
 syntax = "proto3";
 
-package de.honoka.test.grpc.common;
+package de.honoka.test.grpc.common.protobuf;
+
+option java_outer_classname = "TestEntityProto";
+option java_multiple_files = true;
 
 message TestEntity {
-  //自身属性
   int32 id = 1;
-  string code = 2;
-  string name = 3;
+  string name = 2;
+  string description = 3;
+}
+
+message GrpcResponse {
+  bool status = 1;
+  string json = 2;
+}
+
+service TestEntityService {
+  rpc test(TestEntity) returns(GrpcResponse);
 }

@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.22' apply false
+}
+
+group = 'de.honoka.test'
+version = '1.0-SNAPSHOT'
+
+subprojects {
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+
+    group = rootProject.group
+    version = rootProject.version
+    java.sourceCompatibility = '17'
+
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://mirrors.honoka.de/maven-repo/'
+        }
+    }
+
+    dependencies {
+        implementation 'cn.hutool:hutool-all:5.8.18'
+        implementation 'de.honoka.sdk:honoka-utils:1.0.7'
+        implementation 'de.honoka.sdk:honoka-framework-utils:1.0.1'
+        implementation 'io.grpc:grpc-netty:1.53.0'
+        implementation 'io.grpc:grpc-protobuf:1.53.0'
+        implementation 'io.grpc:grpc-stub:1.53.0'
+        implementation 'org.jetbrains.kotlin:kotlin-reflect'
+        testImplementation 'junit:junit:4.13.2'
+    }
+
+    tasks.withType(Test).tap {
+        configureEach {
+            useJUnitPlatform()
+        }
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = sourceCompatibility
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = sourceCompatibility
+    }
+}

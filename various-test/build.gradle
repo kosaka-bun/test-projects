@@ -15,7 +15,7 @@ plugins {
 
 group 'de.honoka.test'
 version '1.0-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 repositories {
     maven {
@@ -33,7 +33,7 @@ dependencies {
     implementation 'net.java.dev.jna:jna:5.3.1'
     implementation 'net.sourceforge.htmlunit:htmlunit:2.36.0'
     implementation 'com.sobte.cqp:jcq:1.2.7'
-    String lombok = 'org.projectlombok:lombok:1.18.16'
+    String lombok = 'org.projectlombok:lombok:1.18.26'
     compileOnly lombok
     annotationProcessor lombok
     implementation 'de.honoka.sdk:honoka-json-gson:1.0.0'

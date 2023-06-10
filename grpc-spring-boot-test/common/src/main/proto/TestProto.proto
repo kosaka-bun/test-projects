@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "de.honoka.test.grpc.springboot.proto";
+option java_multiple_files = true;
+
+message TestMessage {
+  int32 id = 1;
+  string msg = 2;
+}
+
+service TestService {
+  rpc Test(TestMessage) returns(TestMessage);
+}

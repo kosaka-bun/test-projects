@@ -1,0 +1,32 @@
+//file:noinspection GrUnresolvedAccess
+//file:noinspection GroovyAssignabilityCheck
+
+dependencies {
+    compileOnly 'com.google.protobuf:protobuf-java'
+    compileOnly 'com.google.protobuf:protobuf-java-util'
+    compileOnly 'io.grpc:grpc-netty'
+    compileOnly 'io.grpc:grpc-protobuf'
+    compileOnly 'io.grpc:grpc-stub'
+    compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
+    if(JavaVersion.current().isJava9Compatible()) {
+        compileOnly 'jakarta.annotation:jakarta.annotation-api:1.3.5'
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.23.2'
+    }
+
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.55.1'
+        }
+    }
+
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}

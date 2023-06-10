@@ -1,0 +1,8 @@
+###
+POST {{base_url}}/test
+Content-Type: application/json
+
+{
+  "id": 3,
+  "msg": "This is a test."
+}

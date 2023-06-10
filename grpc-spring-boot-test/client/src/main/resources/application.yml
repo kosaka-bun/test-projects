@@ -1,0 +1,10 @@
+server:
+  port: 8091
+
+grpc:
+  client:
+    test-server:
+      address: dns:///localhost:9090
+      enable-keep-alive: true
+      keep-alive-without-calls: true
+      negotiation-type: plaintext

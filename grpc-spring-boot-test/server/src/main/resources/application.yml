@@ -1,0 +1,6 @@
+server:
+  port: 8090
+
+grpc:
+  server:
+    port: 9090

@@ -1,10 +1,12 @@
 package de.honoka.test.kotlin.coroutine
 
-import de.honoka.util.code.ColorfulText
+import de.honoka.sdk.util.code.ColorfulText
 import kotlinx.coroutines.*
 import java.util.concurrent.Executors
 import kotlin.system.exitProcess
 
+@Suppress("OPT_IN_IS_NOT_ENABLED")
+@OptIn(DelicateCoroutinesApi::class)
 object CoroutineTest {
 
 	@JvmStatic

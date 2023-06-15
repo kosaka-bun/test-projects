@@ -1,0 +1,51 @@
+//file:noinspection GrUnresolvedAccess
+
+buildscript {
+    ext {
+        kotlinVersion = '1.6.21'
+        kotlinCoroutinesVersion = '1.6.3'
+        elasticSearchVersion = '7.17.6'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'io.freefair.lombok' version '8.0.1'
+    id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
+}
+
+group = 'de.honoka.test'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    maven {
+        url 'https://maven.aliyun.com/repository/central'
+    }
+    mavenCentral()
+    maven {
+        url 'https://mirrors.honoka.de/maven-repo/'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+    implementation 'de.honoka.sdk:honoka-utils:1.0.7'
+    implementation 'junit:junit:4.13'
+}
+
+tasks.withType(Test).tap {
+    configureEach {
+        useJUnitPlatform()
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = sourceCompatibility
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = sourceCompatibility
+}

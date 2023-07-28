@@ -2,18 +2,9 @@ package de.honoka.test.spring.crt.test1
 
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Component
 import javax.annotation.Resource
-
-@SpringBootApplication
-class CrtTest1Application
-
-fun main(args: Array<String>) {
-    runApplication<CrtTest1Application>(*args)
-}
 
 @Component
 class Bean1 : ApplicationRunner {

@@ -7,7 +7,6 @@ import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
-import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 
 @Component
@@ -32,7 +31,7 @@ class UsageBean : ApplicationContextAware, ApplicationRunner {
     }
 }
 
-@Configuration
+//@Configuration
 class BeanConfig : BeanDefinitionRegistryPostProcessor {
 
     override fun postProcessBeanFactory(beanFactory: ConfigurableListableBeanFactory) {}

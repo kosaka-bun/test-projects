@@ -1,4 +1,4 @@
-package de.honoka.test.spring.crt.test1
+package de.honoka.test.spring.crt.test2
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

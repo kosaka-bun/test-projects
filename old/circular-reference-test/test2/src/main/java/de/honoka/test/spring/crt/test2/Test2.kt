@@ -3,20 +3,26 @@ package de.honoka.test.spring.crt.test2
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Component
+import javax.annotation.PostConstruct
 import javax.annotation.Resource
 
 @Component
 class MessengerFramework {
 
-    @Resource
-    private lateinit var listener: MessageListener
+    private val listeners: MutableList<MessageListener> = arrayListOf()
 
     fun send(str: String) {
         println("发送：$str")
     }
 
     fun receive(str: String) {
-        listener.onMessage(str)
+        listeners.forEach {
+            it.onMessage(str)
+        }
+    }
+
+    fun registerListener(listener: MessageListener) {
+        listeners.add(listener)
     }
 }
 
@@ -25,6 +31,11 @@ class MessageListener {
 
     @Resource
     private lateinit var framework: MessengerFramework
+
+    @PostConstruct
+    fun register() {
+        framework.registerListener(this)
+    }
 
     fun onMessage(str: String) {
         println("收到：$str")

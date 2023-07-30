@@ -7,34 +7,40 @@ import org.springframework.stereotype.Component
 import javax.annotation.Resource
 
 @Component
-class Bean1 : ApplicationRunner {
+class MessengerFramework {
 
     @Resource
-    private var bean2: Bean2? = null
+    private lateinit var listener: MessageListener
 
-    override fun run(args: ApplicationArguments) {
-        println("Bean1")
-        println(bean2)
+    fun send(str: String) {
+        println("发送：$str")
     }
 
-    override fun toString(): String {
-        return "Bean1: bean2=" + (bean2?.hashCode() ?: "null")
+    fun receive(str: String) {
+        listener.onMessage(str)
     }
 }
 
 @Component
-class Bean2 : ApplicationRunner {
+class MessageListener {
 
     @Lazy
     @Resource
-    private var bean1: Bean1? = null
+    private lateinit var framework: MessengerFramework
+
+    fun onMessage(str: String) {
+        println("收到：$str")
+        framework.send("长度：${str.length}")
+    }
+}
+
+@Component
+class Test1 : ApplicationRunner {
+
+    @Resource
+    private lateinit var framework: MessengerFramework
 
     override fun run(args: ApplicationArguments) {
-        println("Bean2")
-        println(bean1)
-    }
-
-    override fun toString(): String {
-        return "Bean2: bean1=" + (bean1?.hashCode() ?: "null")
+        framework.receive("hello")
     }
 }

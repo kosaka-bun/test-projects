@@ -1,15 +1,25 @@
 package de.honoka.test.spring.security
 
+import de.honoka.sdk.util.code.ThrowsRunnable
+import de.honoka.sdk.util.framework.spring.gui.SpringBootConsoleWindow
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import java.util.function.Consumer
 
 @SpringBootApplication
-class MainClassConfig
+class SpringSecurityTestApplication
 
-object SpringSecurityTestApplication {
-
-    @JvmStatic
-    fun main(args: Array<String>) {
-        runApplication<MainClassConfig>(*args)
+fun main(args: Array<String>) {
+    SpringBootConsoleWindow.of(1.25, SpringSecurityTestApplication::class.java).run {
+        applicationArgs = args
+        beforeRunApplication = ThrowsRunnable {
+            System.err.println("before")
+        }
+        onExit = Consumer {
+            System.err.println(it)
+        }
+        configureWindowBuilder {
+            it.textPaneFontName = "宋体"
+        }
+        createAndRun()
     }
 }

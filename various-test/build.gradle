@@ -25,10 +25,11 @@ repositories {
     maven {
         url 'https://mirrors.honoka.de/maven-repo/'
     }
+    mavenLocal()
 }
 
 dependencies {
-    implementation 'de.honoka.sdk:honoka-utils:1.0.2'
+    implementation 'de.honoka.sdk:honoka-utils:1.0.8-dev'
     implementation 'junit:junit:4.13'
     implementation 'net.java.dev.jna:jna:5.3.1'
     implementation 'net.sourceforge.htmlunit:htmlunit:2.36.0'

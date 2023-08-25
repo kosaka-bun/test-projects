@@ -10,7 +10,7 @@ public class JniTest {
 	
 	static {
 		//使用loadLibrary加载库时，不能加文件后缀，而使用load方法则需要添加
-		System.loadLibrary("./target/classes/JniTest/jni-test64");
+		System.loadLibrary("./build/resources/main/JniTest/jni-test64");
 	}
 	
 	public void messageInJava(String arg) {

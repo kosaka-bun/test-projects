@@ -8,17 +8,17 @@ class AllTest {
     void test1() {
         println "Test1"
         JavaClass javaClass = new JavaClass()
-        Closure<?> clousure1 = {
+        Closure<?> closure1 = {
             abcdef()
         }
-        clousure1.delegate = javaClass
+        closure1.delegate = javaClass
         def map = new HashMap<String, String>()
-        Closure<?> clousure2 = {
+        Closure<?> closure2 = {
             value1 = "value1"
         }
-        clousure2.delegate = map
-        clousure1()
-        clousure2()
+        closure2.delegate = map
+        closure1()
+        closure2()
         println map.value1
     }
 }

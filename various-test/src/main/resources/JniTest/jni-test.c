@@ -1,4 +1,4 @@
-#include "test_JNITest.h"
+#include "test_JniTest.h"
 #include <stdio.h>
 #include <windows.h>
 #include "../CHeader/utf8_to_gbk.h"
@@ -11,7 +11,7 @@
 void callJavaMethod(JNIEnv *);
 
 //jobj表示本地方法所属的对象，其后的其他参数表示本地方法的参数
-JNIEXPORT void JNICALL Java_de_honoka_test_various_test_JNITest_messageInC(JNIEnv *env,
+JNIEXPORT void JNICALL Java_de_honoka_test_various_test_JniTest_messageInC(JNIEnv *env,
         jobject jobj, jstring jstr) {
     MessageBoxA(0, utf8ToGbk("DLL加载成功！"), utf8ToGbk("JNI测试"), MB_OK);
     char *str = (char *)(*env)->GetStringUTFChars(env, jstr, 0);

@@ -4,17 +4,31 @@ import de.honoka.sdk.util.code.CodeUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.Test;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 @SuppressWarnings("unused")
 public class AllTest {
+
+    @Test
+    public void test26() {
+        List<Integer> list = Stream.of('A', 'c', '1', 'p', '*').map(c -> (int) c).toList();
+        list = new ArrayList<>(list);
+        Collections.sort(list);
+        List<Character> chars = list.stream().map(i -> (char) i.intValue()).toList();
+        System.out.println(chars);
+    }
 
     //@Test
     @SneakyThrows

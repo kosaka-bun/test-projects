@@ -34,6 +34,8 @@ dependencies {
     implementation 'net.java.dev.jna:jna:5.3.1'
     implementation 'net.sourceforge.htmlunit:htmlunit:2.36.0'
     implementation 'com.sobte.cqp:jcq:1.2.7'
+    implementation 'de.marhali:json5-java:2.0.0'
+    implementation 'com.baomidou:mybatis-plus:3.5.2'
     String lombok = 'org.projectlombok:lombok:1.18.26'
     compileOnly lombok
     annotationProcessor lombok
@@ -44,7 +46,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:" +
             "$kotlinCoroutinesVersion"
     implementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
-    implementation 'com.baomidou:mybatis-plus:3.5.2'
 }
 
 tasks.withType(Test).configureEach {

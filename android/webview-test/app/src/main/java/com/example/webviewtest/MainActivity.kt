@@ -1,7 +1,9 @@
 package com.example.webviewtest
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -45,6 +47,17 @@ class MainActivity : AppCompatActivity() {
                 webView.goBack()
             }
         }
-        webView.loadUrl("file:///android_asset/dist/index.html")
+        webView.run {
+            loadUrl("file:///android_asset/dist/index.html")
+            addJavascriptInterface(TestJsInterface(this@MainActivity), "android")
+        }
+    }
+}
+
+class TestJsInterface(private val context: Context) {
+
+    @JavascriptInterface
+    fun test() {
+        Toast.makeText(context, "JavaScriptInterface测试", Toast.LENGTH_SHORT).show()
     }
 }

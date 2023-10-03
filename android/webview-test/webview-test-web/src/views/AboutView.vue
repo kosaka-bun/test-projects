@@ -7,6 +7,10 @@
         double counter: {{ counter.doubleCount }}
         <el-button @click="incr()">incr</el-button>
       </p>
+      <p>
+        Test Android JavaScript Interface:
+        <el-button @click="jsInterfaceTest">test</el-button>
+      </p>
     </div>
   </div>
 </template>
@@ -18,6 +22,10 @@ const counter = useCounterStore()
 
 function incr() {
   counter.increment()
+}
+
+function jsInterfaceTest() {
+  android.test()
 }
 </script>
 

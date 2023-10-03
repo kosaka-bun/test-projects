@@ -7,4 +7,3 @@ rmdir /s /q .\dist
 rmdir /s /q %TARGET_DIR%
 call npm run build
 xcopy /y /e /i /q dist\* %TARGET_DIR%
-git add %TARGET_DIR%

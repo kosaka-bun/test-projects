@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
         webView.run {
             loadUrl("file:///android_asset/dist/index.html")
-            addJavascriptInterface(TestJsInterface(this@MainActivity), "android")
+            addJavascriptInterface(TestJsInterface(this@MainActivity), "android_TestJsInterface")
         }
     }
 }
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 class TestJsInterface(private val context: Context) {
 
     @JavascriptInterface
-    fun test() {
+    fun test1() {
         Toast.makeText(context, "JavaScriptInterface测试", Toast.LENGTH_SHORT).show()
     }
 }

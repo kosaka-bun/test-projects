@@ -34,10 +34,10 @@ class MainActivity : AppCompatActivity() {
                     return true
                 }
             }
-        }
-        webView.settings.run {
-            //必须打开，否则网页可能显示为空白
-            javaScriptEnabled = true
+            settings.run {
+                //必须打开，否则网页可能显示为空白
+                javaScriptEnabled = true
+            }
         }
         findViewById<Button>(R.id.btn).run {
             setOnClickListener {
@@ -45,6 +45,6 @@ class MainActivity : AppCompatActivity() {
                 webView.goBack()
             }
         }
-        webView.loadUrl("http://baidu.com")
+        webView.loadUrl("file:///android_asset/dist/index.html")
     }
 }

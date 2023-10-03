@@ -10,6 +10,8 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cn.hutool.http.HttpUtil
+import cn.hutool.json.JSONUtil
 
 @SuppressLint("SetJavaScriptEnabled")
 class MainActivity : AppCompatActivity() {
@@ -59,5 +61,13 @@ class TestJsInterface(private val context: Context) {
     @JavascriptInterface
     fun test1() {
         Toast.makeText(context, "JavaScriptInterface测试", Toast.LENGTH_SHORT).show()
+    }
+
+    @JavascriptInterface
+    fun loadApi(): String = try {
+        val res = HttpUtil.get("https://api.bilibili.com/x/web-interface/wbi/index/top/feed/rcmd")
+        JSONUtil.parse(res).toStringPretty()
+    } catch(t: Throwable) {
+        "load failed"
     }
 }

@@ -10,6 +10,9 @@
       Test Android JavaScript Interface:
       <el-button @click="jsInterfaceTest()">test</el-button>
     </p>
+    <p>
+      <router-link to="/httpApiTest">HTTP API Test</router-link>
+    </p>
   </div>
 </template>
 

@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        main()
+        initWebPage()
     }
 
-    private fun main() {
+    private fun initWebPage() {
         val webView = findViewById<WebView>(R.id.web_view).apply {
             webViewClient = object : WebViewClient() {
 

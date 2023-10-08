@@ -1,0 +1,14 @@
+###
+POST {{base_url}}/abc/def?a=1&b=2
+Content-Type: application/json
+
+{
+  "a": 1,
+  "b": 23
+}
+
+###
+CONNECT https://leetcode.cn:443
+Host: leetcode.cn:443
+Proxy-Connection: keep-alive
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 Core/1.94.202.400 QQBrowser/11.9.5355.400

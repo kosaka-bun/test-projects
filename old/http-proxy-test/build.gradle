@@ -70,3 +70,7 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = sourceCompatibility
 }
+
+springBoot {
+    mainClass = 'de.honoka.test.httpproxy.HttpProxyTestApplicationKt'
+}

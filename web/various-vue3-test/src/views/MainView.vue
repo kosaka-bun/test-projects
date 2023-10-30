@@ -3,6 +3,7 @@
     <h1>Various Vue 3 Test</h1>
     <div class="links">
       <RouterLink to="/test/test1">Test 1</RouterLink>
+      <RouterLink to="/test/videoTest">Video Player Test</RouterLink>
     </div>
   </div>
 </template>

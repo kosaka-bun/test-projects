@@ -67,17 +67,18 @@ function loadDanmakuList() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .player {
-  visibility: hidden;
   width: 800px;
-  min-height: 450px;
+  //若不明确设置height，会导致在播放器挂载到容器之后，容器的min-height不会对播放器生效（播放器高度不会充满容器的min-height）
+  height: 0;
+  min-height: calc((9 / 16.0) * 800px);
 }
 
 @media(max-width: 800px) {
   .player {
     width: 100%;
-    min-height: calc((100 / 16.0) * 9vw);
+    min-height: calc((9 / 16.0) * 100vw);
   }
 }
 </style>

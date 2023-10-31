@@ -70,4 +70,10 @@ function loadDanmakuList() {
   width: 800px;
   height: 500px;
 }
+
+@media (max-width: 800px) {
+  .player {
+    width: 100%;
+  }
+}
 </style>

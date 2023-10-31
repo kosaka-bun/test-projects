@@ -9,12 +9,14 @@
 import { onMounted, ref } from 'vue'
 import Player from 'nplayer'
 import Danmaku from '@nplayer/danmaku'
+import request from '@/utils/request'
 
 const playerDom = ref()
 let player
 
 onMounted(() => {
   initPlayer()
+  loadDanmakuList()
 })
 
 function initPlayer() {
@@ -34,16 +36,32 @@ function initPlayer() {
       ],
       [ 'progress' ]
     ],
-    plugins: [ new Danmaku(danmakuOptions) ]
+    plugins: [
+      new Danmaku({
+        autoInsert: false,
+        unlimited: true,
+        area: 1
+      })
+    ]
   })
   player.mount(playerDom.value)
 }
 
-const danmakuOptions = {
-  items: [
-    { time: 1, text: '弹幕～' }
-  ],
-  autoInsert: false
+function loadDanmakuList() {
+  request({
+    url: 'http://pc.honoka.de:8080/bilibili/video/danmaku',
+    method: 'get',
+    params: {
+      bvid: 'BV14N4y1N7H9'
+    }
+  }).then(res => {
+    let list = [ ...res.data ]
+    list.forEach(it => {
+      it.text = it.content
+      it.color = it.colorRgb
+    })
+    player.danmaku.appendItems(list)
+  })
 }
 </script>
 

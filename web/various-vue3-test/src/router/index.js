@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
-import Test1View from '@/views/test/Test1View.vue'
+import ScrollBarTestView from '@/views/test/ScrollBarTestView.vue'
 import VideoPlayerTestView from '@/views/test/VideoPlayerTestView.vue'
 
 const router = createRouter({
@@ -11,8 +11,8 @@ const router = createRouter({
       component: MainView
     },
     {
-      path: '/test/test1',
-      component: Test1View
+      path: '/test/scrollBarTest',
+      component: ScrollBarTestView
     },
     {
       path: '/test/videoTest',

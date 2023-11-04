@@ -1,17 +1,15 @@
 <template>
   <div>
     <h1>Scroll Bar Test</h1>
-    <div class="container">
-      <el-scrollbar :always="true">
-        <div v-for="item in 20" :key="item" class="scrollbar-demo-item">{{ item }}</div>
-      </el-scrollbar>
-    </div>
+    <scroll-block class="container">
+      <div v-for="item in 20" :key="item" class="scrollbar-demo-item">{{ item }}</div>
+    </scroll-block>
     <p v-for="item in 20" :key="item" class="scrollbar-demo-item">{{ item }}</p>
   </div>
 </template>
 
 <script setup>
-
+import ScrollBlock from '@/components/ScrollBlock.vue'
 </script>
 
 <style scoped lang="scss">

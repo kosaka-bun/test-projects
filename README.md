@@ -1,6 +1,6 @@
 # Test Projects
 [![License](https://img.shields.io/github/license/kosaka-bun/test-projects?label=License&color=blue&logo=GitHub)](./LICENSE)
-![GitHub Stars](https://img.shields.io/github/stars/kosaka-bun/test-projects?label=Stars&logo=GitHub)
+![GitHub Stars](https://img.shields.io/github/stars/kosaka-bun/test-projects?label=Stars&logo=GitHub&style=flat)
 
 ## 简介
 本仓库是一个用于存储各类个人测试代码等内容的仓库。

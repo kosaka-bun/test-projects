@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -40,6 +42,7 @@ dependencies {
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("com.alibaba.fastjson2:fastjson2:2.0.40.android4")
     implementation("cn.hutool:hutool-all:5.8.18")
+    implementation("com.j256.ormlite:ormlite-android:5.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

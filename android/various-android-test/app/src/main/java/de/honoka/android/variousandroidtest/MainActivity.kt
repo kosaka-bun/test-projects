@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import de.honoka.android.variousandroidtest.ui.DatabaseTestActivity
 import de.honoka.android.variousandroidtest.ui.InstalledAppReadTestActivity
 
 class MainActivity : AppCompatActivity() {
 
     private val idActivityMap = mapOf(
-        R.id.installedAppReadTestActivityBtn to InstalledAppReadTestActivity::class.java
+        R.id.installedAppReadTestActivityBtn to InstalledAppReadTestActivity::class.java,
+        R.id.databaseTestActivityBtn to DatabaseTestActivity::class.java
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

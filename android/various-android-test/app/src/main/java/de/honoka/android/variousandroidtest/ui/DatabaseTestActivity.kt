@@ -20,6 +20,11 @@ import java.util.*
 
 class DatabaseTestActivity : AppCompatActivity() {
 
+    companion object {
+
+        lateinit var dao: Dao<TestEntity, String>
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_database_test)
@@ -30,35 +35,31 @@ class DatabaseTestActivity : AppCompatActivity() {
 
     private fun doAction() {
         val databaseHelper = DatabaseHelper(this)
-        val dao: Dao<TestEntity, String> = databaseHelper.getDao(TestEntity::class.java)
-        var count = 0
+        dao = databaseHelper.getDao(TestEntity::class.java)
+        //transactionTest()
+        val queryForAll = dao.queryForAll()
+        println(queryForAll)
+    }
+
+    private fun transactionTest() {
         try {
             dao.callBatchTasks {
-                repeat(5) {
-                    dao.create(TestEntity().apply {
-                        id = UUID.randomUUID().toString()
-                        col1 = RandomUtil.randomInt(1, 100)
-                        col2 = col1!! / 2 == 0
-                        col3 = RandomUtil.randomDouble(1.0, 100.0, 2, RoundingMode.HALF_UP)
-                        if(col1!! > 80) throw Exception()
-                    })
-                    count += 1
-                }
+                val items = TestEntity.insertItems(5)
+                if(items.last().col1!! > 80) throw Exception()
             }
         } catch(t: Throwable) {
             println()
         }
-        val queryForAll = dao.queryForAll()
-        println(queryForAll)
     }
 }
 
 class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(
-    context, "database_test.db", null, 1
+    context, "database_test.db", null, 2
 ) {
 
     override fun onCreate(database: SQLiteDatabase, connectionSource: ConnectionSource) {
         TableUtils.createTable(connectionSource, TestEntity::class.java)
+        TestEntity.insertItems(10)
     }
 
     override fun onUpgrade(
@@ -67,6 +68,13 @@ class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(
         oldVersion: Int,
         newVersion: Int
     ) {
+        TableUtils.dropTable<TestEntity, Any>(connectionSource, TestEntity::class.java, false)
+        TableUtils.createTable(connectionSource, TestEntity::class.java)
+        TestEntity.insertItems(5)
+        //throw Exception()
+    }
+
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         println()
     }
 }
@@ -74,7 +82,7 @@ class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(
 @DatabaseTable(tableName = "test_entity")
 data class TestEntity(
 
-    @DatabaseField(id = true, unique = true)
+    @DatabaseField(id = true)
     var id: String? = null,
 
     @DatabaseField
@@ -85,4 +93,22 @@ data class TestEntity(
 
     @DatabaseField
     var col3: Double? = null
-)
+) {
+
+    companion object {
+
+        fun insertItems(count: Int): List<TestEntity> {
+            val list = ArrayList<TestEntity>()
+            repeat(count) {
+                DatabaseTestActivity.dao.create(TestEntity().apply {
+                    id = UUID.randomUUID().toString()
+                    col1 = RandomUtil.randomInt(1, 100)
+                    col2 = col1!! / 2 == 0
+                    col3 = RandomUtil.randomDouble(1.0, 100.0, 2, RoundingMode.HALF_UP)
+                    list.add(this)
+                })
+            }
+            return list
+        }
+    }
+}

@@ -4,7 +4,9 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import cn.hutool.core.bean.BeanUtil
 import cn.hutool.core.util.RandomUtil
+import com.alibaba.fastjson2.JSONObject
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper
 import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.field.DatabaseField
@@ -36,6 +38,8 @@ class DatabaseTestActivity : AppCompatActivity() {
     private fun doAction() {
         val databaseHelper = DatabaseHelper(this)
         dao = databaseHelper.getDao(TestEntity::class.java)
+        //触发升级或降级
+        databaseHelper.writableDatabase
         //transactionTest()
         val queryForAll = dao.queryForAll()
         println(queryForAll)
@@ -54,7 +58,7 @@ class DatabaseTestActivity : AppCompatActivity() {
 }
 
 class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(
-    context, "database_test.db", null, 2
+    context, "database_test.db", null, 3
 ) {
 
     override fun onCreate(database: SQLiteDatabase, connectionSource: ConnectionSource) {
@@ -68,10 +72,24 @@ class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(
         oldVersion: Int,
         newVersion: Int
     ) {
+        val newList = ArrayList<TestEntity>()
+        val currentRowData = ArrayList<JSONObject>()
+        val sql = DatabaseTestActivity.dao.queryBuilder().prepareStatementString()
+        DatabaseTestActivity.dao.queryRaw(sql).use {
+            it.results.forEach { row ->
+                val jo = JSONObject()
+                it.columnNames.forEachIndexed { i, colName ->
+                    jo[colName] = row[i]
+                }
+                currentRowData.add(jo)
+            }
+        }
         TableUtils.dropTable<TestEntity, Any>(connectionSource, TestEntity::class.java, false)
         TableUtils.createTable(connectionSource, TestEntity::class.java)
-        TestEntity.insertItems(5)
-        //throw Exception()
+        currentRowData.forEach {
+            newList.add(BeanUtil.toBeanIgnoreError(it, TestEntity::class.java))
+        }
+        DatabaseTestActivity.dao.create(newList)
     }
 
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -92,7 +110,13 @@ data class TestEntity(
     var col2: Boolean? = null,
 
     @DatabaseField
-    var col3: Double? = null
+    var col3: Double? = null,
+
+    @DatabaseField
+    var multiWordCol: String? = null,
+
+    //@DatabaseField
+    //var col4: Double? = null
 ) {
 
     companion object {
@@ -105,6 +129,7 @@ data class TestEntity(
                     col1 = RandomUtil.randomInt(1, 100)
                     col2 = col1!! / 2 == 0
                     col3 = RandomUtil.randomDouble(1.0, 100.0, 2, RoundingMode.HALF_UP)
+                    //col4 = RandomUtil.randomInt(1, 100).toDouble()
                     list.add(this)
                 })
             }

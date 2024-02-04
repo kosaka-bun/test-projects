@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import cn.hutool.core.bean.BeanUtil
 import cn.hutool.core.util.RandomUtil
-import com.alibaba.fastjson2.JSONObject
+import cn.hutool.json.JSONObject
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper
 import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.field.DatabaseField
@@ -58,7 +58,7 @@ class DatabaseTestActivity : AppCompatActivity() {
 }
 
 class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(
-    context, "database_test.db", null, 3
+    context, "database_test.db", null, 2
 ) {
 
     override fun onCreate(database: SQLiteDatabase, connectionSource: ConnectionSource) {

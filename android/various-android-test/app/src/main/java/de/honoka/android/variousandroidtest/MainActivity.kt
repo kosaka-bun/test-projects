@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import de.honoka.android.variousandroidtest.ui.DatabaseTestActivity
 import de.honoka.android.variousandroidtest.ui.InstalledAppReadTestActivity
+import de.honoka.sdk.util.android.common.GlobalComponents
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        GlobalComponents.application = application
         initButtons()
     }
 

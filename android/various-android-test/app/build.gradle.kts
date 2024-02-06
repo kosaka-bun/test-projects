@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+import android.annotation.SuppressLint
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,12 +9,13 @@ plugins {
 
 android {
     namespace = "de.honoka.android.variousandroidtest"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "de.honoka.android.variousandroidtest"
         minSdk = 26
-        targetSdk = 34
+        @SuppressLint("OldTargetApi")
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -37,12 +40,12 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.core:core-ktx:1.8.0")
+    implementation("androidx.appcompat:appcompat:1.5.1")
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
-    implementation("de.honoka.sdk:honoka-android-utils:1.0.0")
+    implementation("de.honoka.sdk:honoka-android-utils:1.0.2")
     implementation("cn.hutool:hutool-all:5.8.18")
     implementation("com.j256.ormlite:ormlite-android:5.1")
     testImplementation("junit:junit:4.13.2")

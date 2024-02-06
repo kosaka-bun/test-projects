@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.util.Base64
+import java.util.*
 
 class InstalledAppReadTestActivity : AppCompatActivity() {
 
@@ -29,6 +29,7 @@ class InstalledAppReadTestActivity : AppCompatActivity() {
             if(exists()) FileUtil.del(this)
             mkdirs()
         }
+        @Suppress("DEPRECATION")
         packageManager.getInstalledApplications(0).forEach {
             if(!it.packageName.startsWith("de.honoka")) return@forEach
             val appName = packageManager.getApplicationLabel(it)

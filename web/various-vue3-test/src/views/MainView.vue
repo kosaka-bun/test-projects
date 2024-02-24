@@ -3,6 +3,7 @@
     <h1>Various Vue 3 Test</h1>
     <div class="links">
       <RouterLink to="/test/scrollBarTest">Scroll Bar Test</RouterLink>
+      <RouterLink to="/test/lenisTest">Lenis Test</RouterLink>
     </div>
   </div>
 </template>
@@ -11,7 +12,7 @@
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .links {
   display: flex;
   width: 35%;

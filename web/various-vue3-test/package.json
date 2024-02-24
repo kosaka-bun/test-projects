@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@studio-freight/lenis": "^1.0.37",
     "axios": "^1.6.0",
     "element-plus": "^2.4.1",
     "pinia": "^2.1.7",

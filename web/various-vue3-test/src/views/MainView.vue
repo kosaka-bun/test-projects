@@ -4,6 +4,7 @@
     <div class="links">
       <RouterLink to="/test/scrollBarTest">Scroll Bar Test</RouterLink>
       <RouterLink to="/test/lenisTest">Lenis Test</RouterLink>
+      <RouterLink to="/test/inertialScrollTest">Inertial Scroll Test</RouterLink>
     </div>
   </div>
 </template>

@@ -24,7 +24,10 @@ let lastMovingYOfSpeedCalc
 
 let speedArray = []
 
+let runningScrollTask
+
 function onTouchStart(e) {
+  runningScrollTask = null
   let startY = e.changedTouches[0].clientY
   movingY = startY
   lastMovingYOfSpeedCalc = startY
@@ -32,7 +35,7 @@ function onTouchStart(e) {
   speedCalcTask = setInterval(() => {
     let speed = movingY - lastMovingYOfSpeedCalc
     lastMovingYOfSpeedCalc = movingY
-    console.log(speed, 'px/10ms')
+    //console.log(speed, 'px/10ms')
     speedArray.push(speed)
   }, 10)
 }
@@ -50,21 +53,46 @@ function onTouchEnd(e) {
   lastSpeeds.forEach(it => {
     speedSum += it
   })
-  //inertialScroll(speedSum / lastSpeeds.length)
-  inertialScrollTest()
+  inertialScroll(speedSum / lastSpeeds.length)
+  //inertialScrollTest()
   //inertialScrollTest2()
   //inertialScrollTest3()
 }
 
 async function inertialScroll(speed) {
-  //let direct = speed >= 0 ? 1 : -1
-  //let unitSpeed = Math.abs(speed)
-  //while(unitSpeed >= 0) {
-  //  console.log(unitSpeed)
-  //  wrapperDom.value.scrollBy(0, unitSpeed * -direct)
-  //  unitSpeed -= 10
-  //  await codeUtils.sleep(10)
-  //}
+  let direct = speed >= 0 ? -1 : 1
+  let thread = () => {
+    let count = 0
+    let absSpeed = Math.abs(speed)
+    let wait = 4
+    if(absSpeed < 0.8) return
+    let scroll = () => {
+      let distance = (absSpeed < 0.8 ? 0.8 : absSpeed) * direct
+      wrapperDom.value.scrollBy(0, distance)
+      count += 1
+      if(absSpeed > 50) {
+        absSpeed -= 0.5
+      } else if(absSpeed > 20) {
+        absSpeed -= 0.35
+      } else if(absSpeed > 10) {
+        absSpeed -= 0.2
+      } else if(absSpeed > 3) {
+        absSpeed -= 0.05
+      } else {
+        absSpeed -= 0.02
+      }
+    }
+    let scrollTask = async () => {
+      while(absSpeed > 0 && scrollTask === runningScrollTask) {
+        scroll()
+        await codeUtils.sleep(wait)
+        if(absSpeed < 0.8 && count % 4 === 0) wait += 1
+      }
+    }
+    runningScrollTask = scrollTask
+    setTimeout(scrollTask)
+  }
+  thread()
 }
 
 async function inertialScrollTest() {

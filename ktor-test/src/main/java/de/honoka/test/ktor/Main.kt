@@ -11,7 +11,6 @@ object Main {
         embeddedServer(
             Netty,
             port = 8080,
-            host = "0.0.0.0",
             module = Application::module
         ).start(wait = true)
     }
@@ -19,4 +18,5 @@ object Main {
 
 fun Application.module() {
     configureRouting()
+    configureHttpHandlers()
 }

@@ -1,0 +1,30 @@
+###
+GET {{base_url}}/
+
+###
+GET {{base_url}}/obj
+
+###
+GET {{base_url}}/arr
+
+###
+GET {{base_url}}/headers
+
+###
+GET {{base_url}}/getParams?a=1&a=2&b=cde&cn=%E4%B8%AD%E6%96%87&empty=
+
+###
+POST {{base_url}}/postBody
+Content-Type: application/json
+
+{
+  "a": 1,
+  "b": "cde",
+  "f": "中文"
+}
+
+###
+GET {{base_url}}/404?a=1
+
+###
+GET {{base_url}}/error

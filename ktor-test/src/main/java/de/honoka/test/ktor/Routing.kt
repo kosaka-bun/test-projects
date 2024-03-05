@@ -46,6 +46,18 @@ fun Application.configureRouting() {
         get("/error") {
             throw Exception("manual")
         }
+        get("/sub/*") {
+            call.respondJson(JSONObject().apply {
+                set("type", "sub")
+                set("url", call.request.path())
+            })
+        }
+        get("/sub2/{...}") {
+            call.respondJson(JSONObject().apply {
+                set("type", "sub2")
+                set("url", call.request.path())
+            })
+        }
     }
 }
 

@@ -28,3 +28,9 @@ GET {{base_url}}/404?a=1
 
 ###
 GET {{base_url}}/error
+
+###
+GET {{base_url}}/sub/1
+
+###
+GET {{base_url}}/sub2/a/b/c

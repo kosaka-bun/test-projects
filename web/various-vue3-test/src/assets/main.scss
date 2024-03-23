@@ -1,0 +1,23 @@
+.nplayer {
+  .quality-control {
+    position: relative;
+    padding: 0 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .quality-item {
+    padding: 5px 20px;
+    font-weight: normal;
+  }
+
+  .quality-item:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .quality-item-active {
+    color: #007aff;
+  }
+}

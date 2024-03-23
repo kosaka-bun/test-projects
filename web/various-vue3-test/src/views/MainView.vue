@@ -5,6 +5,7 @@
       <RouterLink to="/test/scrollBarTest">Scroll Bar Test</RouterLink>
       <RouterLink to="/test/lenisTest">Lenis Test</RouterLink>
       <RouterLink to="/test/inertialScrollTest">Inertial Scroll Test</RouterLink>
+      <RouterLink to="/test/dashTest">Dash Test</RouterLink>
     </div>
   </div>
 </template>

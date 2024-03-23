@@ -3,6 +3,7 @@ import MainView from '@/views/MainView.vue'
 import ScrollBarTestView from '@/views/test/ScrollBarTestView.vue'
 import LenisTestView from '@/views/test/LenisTestView.vue'
 import InertialScrollTestView from '@/views/test/InertialScrollTestView.vue'
+import DashTestView from '@/views/test/DashTestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +23,10 @@ const router = createRouter({
     {
       path: '/test/inertialScrollTest',
       component: InertialScrollTestView
+    },
+    {
+      path: '/test/dashTest',
+      component: DashTestView
     }
   ]
 })

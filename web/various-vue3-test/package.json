@@ -8,6 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dashjs": "^4.7.4",
+    "@nplayer/danmaku": "^1.0.12",
+    "nplayer": "^1.0.15",
     "@studio-freight/lenis": "^1.0.37",
     "axios": "^1.6.0",
     "element-plus": "^2.4.1",

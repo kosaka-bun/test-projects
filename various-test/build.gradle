@@ -42,6 +42,7 @@ dependencies {
     implementation 'de.honoka.sdk:honoka-json-gson:1.0.0'
     //implementation 'de.honoka.sdk:honoka-json-fastjson:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
     //noinspection GradlePackageVersionRange
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:" +
             "$kotlinCoroutinesVersion"

@@ -33,7 +33,7 @@ fun Application.configureRouting() {
         }
         get("/getParams") {
             val json = JSONObject()
-            call.request.queryParameters.forEach { key, value ->
+            call.parameters.forEach { key, value ->
                 json[key] = value[0]
             }
             call.respondJson(json)

@@ -1,5 +1,6 @@
 package de.honoka.test.various;
 
+import cn.hutool.core.map.MapUtil;
 import de.honoka.sdk.util.code.CodeUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
@@ -14,12 +15,25 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({ "unused", "unchecked" })
 public class AllTest {
+
+    @Test
+    public void test27() {
+        Object map = MapUtil.of(new Object[][] {
+            { 1, 1 },
+            { 2, 2 }
+        });
+        Map<Integer, Integer> map2 = (Map<Integer, Integer>) map;
+        for(Map.Entry<Integer, Integer> entry : map2.entrySet()) {
+            System.out.println((entry.getKey() + 1) + "\t" + (entry.getValue() + 1));
+        }
+    }
 
     @Test
     public void test26() {

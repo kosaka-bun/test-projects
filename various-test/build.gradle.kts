@@ -20,7 +20,7 @@ java {
 
 dependencies {
     implementation("de.honoka.sdk:honoka-utils:1.0.8")
-    implementation("junit:junit:4.13")
+    implementation("cn.hutool:hutool-all:5.8.18")
     implementation("net.java.dev.jna:jna:5.3.1")
     implementation("net.sourceforge.htmlunit:htmlunit:2.36.0")
     implementation("com.sobte.cqp:jcq:1.2.7")
@@ -34,6 +34,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}")
     implementation("org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}")
+    implementation("junit:junit:4.13")
 }
 
 tasks {

@@ -1,0 +1,11 @@
+###
+GET {{base_url}}/groovy/classLoader/test1
+
+###
+GET {{base_url}}/groovy/classLoader/test2
+
+###
+GET {{base_url}}/groovy/classLoader/test3
+
+###
+GET {{base_url}}/groovy/classLoader/test4

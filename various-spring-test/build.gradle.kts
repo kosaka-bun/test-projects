@@ -19,6 +19,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("cn.hutool:hutool-all:5.8.18")
+    implementation("org.codehaus.groovy:groovy:2.5.10")
     compileOnly("org.projectlombok:lombok:1.18.26".also {
         annotationProcessor(it)
     })

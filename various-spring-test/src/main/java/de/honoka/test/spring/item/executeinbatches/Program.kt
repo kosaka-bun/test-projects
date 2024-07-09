@@ -1,4 +1,4 @@
-package de.honoka.test.spring.executeinbatches
+package de.honoka.test.spring.item.executeinbatches
 
 import cn.hutool.core.util.RandomUtil
 import cn.hutool.core.util.ReflectUtil

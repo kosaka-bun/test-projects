@@ -1,6 +1,6 @@
 //file:noinspection GrPackage
 
-package de.honoka.test.spring.groovy.dynamic
+package de.honoka.test.spring.item.groovy.dynamic
 
 class Class1 {
 

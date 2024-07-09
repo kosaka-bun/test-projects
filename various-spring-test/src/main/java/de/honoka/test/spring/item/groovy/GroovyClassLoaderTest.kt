@@ -1,4 +1,4 @@
-package de.honoka.test.spring.groovy
+package de.honoka.test.spring.item.groovy
 
 import groovy.lang.GroovyClassLoader
 import org.springframework.web.bind.annotation.GetMapping
@@ -12,7 +12,7 @@ class GroovyClassLoaderTestController {
     val classLoader = GroovyClassLoader(javaClass.classLoader)
 
     private fun invoke(fileName: String, methodName: String = "fun1"): String {
-        val classStr = javaClass.getResource("/groovy-test/$fileName.groovy")?.readText()
+        val classStr = javaClass.getResource("/item/groovy-test/$fileName.groovy")?.readText()
         val clazz = classLoader.parseClass(classStr)
         return clazz.getDeclaredMethod(methodName).invoke(null) as String
     }
@@ -28,7 +28,7 @@ class GroovyClassLoaderTestController {
 
     @GetMapping("/test4")
     fun test4(): String {
-        val className = "de.honoka.test.spring.groovy.dynamic.Class1"
+        val className = "de.honoka.test.spring.item.groovy.dynamic.Class1"
         val clazz = GroovyClassLoader(this.classLoader).loadClass(className)
         return clazz.getDeclaredMethod("fun1").invoke(null) as String
     }

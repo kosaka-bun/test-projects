@@ -1,0 +1,5 @@
+###
+GET {{base_url}}/various/test1
+
+###
+GET {{base_url}}/various/test2

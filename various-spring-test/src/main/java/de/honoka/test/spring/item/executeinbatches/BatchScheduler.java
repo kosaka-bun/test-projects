@@ -1,4 +1,4 @@
-package de.honoka.test.spring.executeinbatches;
+package de.honoka.test.spring.item.executeinbatches;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
 import cn.hutool.core.map.MapUtil;

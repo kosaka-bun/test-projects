@@ -17,6 +17,7 @@ java {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("cn.hutool:hutool-all:5.8.18")
     implementation("de.honoka.sdk:honoka-framework-utils:1.0.5-dev")

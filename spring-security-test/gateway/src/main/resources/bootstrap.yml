@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-security-test-gateway
+  config:
+    import:
+      - classpath:config/routes.yml
+  cloud:
+    nacos:
+      server-addr: vm.honoka.de:8848
+      username: root
+      password: 123456
+    loadbalancer:
+      nacos:
+        enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true

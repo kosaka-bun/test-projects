@@ -1,0 +1,23 @@
+[versions]
+# project modules version
+root = "1.0.0-dev"
+
+# dependencies version
+kotlin = "1.9.23"
+kotlin-coroutines = "1.7.3"
+spring-boot = "3.2.5"
+spring-cloud = "2023.0.2"
+spring-cloud-alibaba = "2023.0.1.0"
+honoka-framework-utils = "1.0.5-dev"
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+dependency-management = "io.spring.dependency-management:1.1.4"
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+
+[libraries]
+spring-cloud-dependencies = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud" }
+spring-cloud-alibaba-dependencies = { module = "com.alibaba.cloud:spring-cloud-alibaba-dependencies", version.ref = "spring-cloud-alibaba" }
+honoka-framework-utils = { module = "de.honoka.sdk:honoka-framework-utils", version.ref = "honoka-framework-utils" }

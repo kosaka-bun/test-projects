@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping("/groovy/classLoader")
 @RestController
-class GroovyClassLoaderTestController {
+class GroovyClassLoaderTest {
 
     val classLoader = GroovyClassLoader(javaClass.classLoader)
 

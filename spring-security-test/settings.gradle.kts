@@ -25,4 +25,5 @@ rootProject.name = "spring-security-test"
 
 include("gateway")
 include("auth")
-include("business")
+include("business1")
+include("business2")

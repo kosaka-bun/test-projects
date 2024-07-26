@@ -57,7 +57,8 @@ subprojects {
     dependencies {
         if(project.name.contains("gateway")) return@dependencies
         implementation("org.springframework.boot:spring-boot-starter-web")
-        runtimeOnly("com.mysql:mysql-connector-j:8.0.33")
+        runtimeOnly("com.h2database:h2")
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         implementation("com.baomidou:mybatis-plus-boot-starter:3.5.5")
         implementation("org.springframework.boot:spring-boot-starter-data-redis")
     }

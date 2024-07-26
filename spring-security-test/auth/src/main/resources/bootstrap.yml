@@ -1,0 +1,41 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: spring-security-test-auth
+  cloud:
+    nacos:
+      server-addr: vm.honoka.de:8848
+      username: root
+      password: 123456
+    loadbalancer:
+      nacos:
+        enabled: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:./data/${spring.application.name};auto_server=true
+  data:
+    redis:
+      host: vm.honoka.de
+      port: 6379
+      password: 123456
+      database: 0
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/*.xml
+
+logging:
+  level:
+    de.honoka.test.spring.security.auth.mapper: debug

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.honoka.test.spring.security.auth.mapper.UserMapper">
+    <sql id="Base_Column_List">
+        ID, PASSWORD, USERNAME
+    </sql>
+    <select id="findByUsername" resultType="de.honoka.test.spring.security.auth.entity.User">
+        select * from `user` where username = #{username} limit 1
+    </select>
+</mapper>

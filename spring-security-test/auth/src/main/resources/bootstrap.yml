@@ -13,8 +13,8 @@ spring:
       nacos:
         enabled: true
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:./data/${spring.application.name};auto_server=true
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:./data/${spring.application.name}.db
   data:
     redis:
       host: vm.honoka.de
@@ -27,14 +27,16 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.community.dialect.SQLiteDialect
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
-  mapper-locations: classpath*:mapper/*.xml
+  # classpath*:mapper/**/*.xml为默认值，默认扫描resources/mapper目录及其子目录下所有xml文件
+  mapper-locations: classpath*:mapper/**/*.xml
 
 logging:
   level:

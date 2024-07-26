@@ -57,9 +57,10 @@ subprojects {
     dependencies {
         if(project.name.contains("gateway")) return@dependencies
         implementation("org.springframework.boot:spring-boot-starter-web")
-        runtimeOnly("com.h2database:h2")
+        runtimeOnly("org.xerial:sqlite-jdbc")
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-        implementation("com.baomidou:mybatis-plus-boot-starter:3.5.5")
+        implementation("org.hibernate.orm:hibernate-community-dialects")
+        implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.5")
         implementation("org.springframework.boot:spring-boot-starter-data-redis")
     }
 

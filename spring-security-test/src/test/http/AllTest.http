@@ -1,3 +1,13 @@
 ###
 # 浏览器打开
-GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=spring-security-test-gateway&scope=profile%20openid
+# redirect_uri不可省略，其必须是SecurityConfig中所配置的oidcClient的redirectUri中的其中一个，否则报告400
+GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=spring-security-test-gateway&scope=profile+openid&redirect_uri=https%3A%2F%2Fwww.baidu.com
+
+###
+POST http://localhost:8081/oauth2/token
+Content-Type: application/x-www-form-urlencoded
+# Authorization的值为SecurityConfig中所配置的oidcClient的clientId与clientSecret（原文），用冒号拼接，然后base64编码
+Authorization: Basic c3ByaW5nLXNlY3VyaXR5LXRlc3QtZ2F0ZXdheToxMjM0NTY=
+
+grant_type=authorization_code&code
+=WFj6qUNlcO21ik2izBnZIm_wIYPElLPRdWPET5Q6cOKLQ5fURotYluZUjHoHFvJveZXeqiunTu6H9n-YW9mfsSUgkh4WRnS2mU3xIoavUVFK7eswUVi-xL9vyjAVm3VQ&redirect_uri=https%3A%2F%2Fwww.baidu.com

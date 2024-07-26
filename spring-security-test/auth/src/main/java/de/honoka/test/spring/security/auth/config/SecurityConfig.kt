@@ -37,6 +37,11 @@ import java.util.*
 @Configuration
 class SecurityConfig {
 
+    companion object {
+
+        val passwordEncoder = BCryptPasswordEncoder()
+    }
+
     /*
      * 当@Bean注解与@Order注解连用时，表示为来自同一个类的Bean实例赋予在其他Bean中被注入的顺序。
      * 例如，此处创建了一个SecurityFilterChain，@Order的值为1，则当另一个Bean通过@Resource或构造器参数等方式注入
@@ -91,10 +96,10 @@ class SecurityConfig {
     fun registeredClientRepository(): RegisteredClientRepository {
         val oidcClient = RegisteredClient.withId(UUID.randomUUID().toString()).run {
             clientId("spring-security-test-gateway")
-            //{noop}开头，表示以明文存储后面的密码
-            clientSecret("{noop}123456")
+            clientSecret(passwordEncoder.encode("123456"))
             //请求授权码时使用默认的认证方式
             clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
             //配置授权码模式，刷新令牌，客户端模式
             authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -152,5 +157,5 @@ class SecurityConfig {
     }
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+    fun passwordEncoder(): PasswordEncoder = passwordEncoder
 }

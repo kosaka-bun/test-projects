@@ -2,12 +2,13 @@ package de.honoka.test.spring.security.auth.entity
 
 import com.baomidou.mybatisplus.annotation.IdType
 import com.baomidou.mybatisplus.annotation.TableId
+import de.honoka.test.spring.security.auth.config.SecurityConfig
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Entity
 data class User(
@@ -24,13 +25,13 @@ data class User(
 
 class UserDetailsImpl(private val user: User) : UserDetails {
 
-    private val encoder = BCryptPasswordEncoder()
-
     override fun getUsername(): String? = user.username
 
-    override fun getPassword(): String? = encoder.encode(user.password)
+    override fun getPassword(): String? = SecurityConfig.passwordEncoder.encode(user.password)
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? = null
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = arrayListOf(
+        SimpleGrantedAuthority("USER")
+    )
 
     override fun isAccountNonExpired(): Boolean = true
 

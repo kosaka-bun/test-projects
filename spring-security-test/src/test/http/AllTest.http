@@ -1,4 +1,13 @@
 ###
+POST {{auth}}/user
+Content-Type: application/json
+
+{
+  "username": "test_user1",
+  "password": "abc123"
+}
+
+###
 # 浏览器打开
 # redirect_uri不可省略，其必须是SecurityConfig中所配置的oidcClient的redirectUri中的其中一个，否则报告400
 GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=spring-security-test-gateway&scope=profile+openid&redirect_uri=https%3A%2F%2Fwww.baidu.com

@@ -80,10 +80,16 @@ class SecurityConfig {
     @Bean
     fun defaultSecurityFilterChain(http: HttpSecurity): SecurityFilterChain = http.run {
         authorizeHttpRequests {
-            //设置所有请求都需要认证，未认证的请求都被重定向到login页面进行登录
+            //允许注册
+            it.requestMatchers("/user/**").permitAll()
+            //设置其他所有请求都需要认证
             it.anyRequest().authenticated()
         }
-        //由Spring Security过滤链中UsernamePasswordAuthenticationFilter过滤器拦截处理login页面提交的登录信息
+        /*
+         * 未登录时，跳转到Spring Security自带的登录页面进行登录。
+         * 默认由Spring Security过滤链中的UsernamePasswordAuthenticationFilter过滤器拦截
+         * 处理login页面提交的登录信息。
+         */
         formLogin(Customizer.withDefaults())
         build()
     }

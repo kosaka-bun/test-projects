@@ -1,5 +1,6 @@
 package de.honoka.test.spring.security.auth.service
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import de.honoka.test.spring.security.auth.entity.User
 import de.honoka.test.spring.security.auth.entity.UserDetailsImpl
 import de.honoka.test.spring.security.auth.mapper.UserMapper
@@ -10,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class UserDetailsServiceImpl(private val userMapper: UserMapper) : UserDetailsService {
+class UserService(private val userMapper: UserMapper) : ServiceImpl<UserMapper, User>(), UserDetailsService {
 
     @PostConstruct
     fun init() {

@@ -1,0 +1,11 @@
+###
+POST {{base_url}}/user
+Content-Type: application/json
+
+{
+  "username": "test_user1",
+  "password": "abc123"
+}
+
+###
+GET {{base_url}}/user/admin

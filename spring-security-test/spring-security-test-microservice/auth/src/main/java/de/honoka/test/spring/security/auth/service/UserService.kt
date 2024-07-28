@@ -1,9 +1,9 @@
 package de.honoka.test.spring.security.auth.service
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
-import de.honoka.test.spring.security.auth.config.SecurityConfig
 import de.honoka.test.spring.security.auth.entity.User
 import de.honoka.test.spring.security.auth.mapper.UserMapper
+import de.honoka.test.spring.security.auth.security.SecurityConfig
 import jakarta.annotation.PostConstruct
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority

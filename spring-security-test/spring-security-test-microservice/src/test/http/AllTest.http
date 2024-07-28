@@ -1,5 +1,5 @@
 ###
-POST {{auth}}/user
+POST {{auth}}/user/info
 Content-Type: application/json
 
 {
@@ -8,12 +8,25 @@ Content-Type: application/json
 }
 
 ###
-GET {{auth}}/user/admin
+GET {{auth}}/user/info/admin
+#X-Token: 3bae915e-884a-4ed4-9d4b-3f623aa5c397
+
+###
+GET {{auth}}/user/test
+
+###
+POST {{auth}}/user/login
+Content-Type: application/json
+
+{
+  "username": "admin"
+}
 
 ###
 # 浏览器打开
 # redirect_uri不可省略，其必须是SecurityConfig中所配置的oidcClient的redirectUri中的其中一个，否则报告400
 GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=spring-security-test-gateway&scope=profile+openid&redirect_uri=https%3A%2F%2Fwww.baidu.com
+Authorization: 4hhs45ydfgdfg
 
 ###
 POST http://localhost:8081/oauth2/token

@@ -9,9 +9,9 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 
 /**
- * 在存在登录态的情况下，为SecurityContextHolder的context添加authentication信息
+ * 在存在自行保存的登录态的情况下，手动为SecurityContextHolder的context添加authentication信息
  */
-object LoginFilter : OncePerRequestFilter() {
+object CustomLoginStatusFilter : OncePerRequestFilter() {
 
     val tokenUserMap = HashMap<String, User>()
 
@@ -25,7 +25,13 @@ object LoginFilter : OncePerRequestFilter() {
             filterChain.doFilter(request, response)
             return
         }
-        val authentication = UsernamePasswordAuthenticationToken(tokenUserMap[token], null)
+        /*
+         * 这里必须使用三个参数的UsernamePasswordAuthenticationToken构造方法，因为两个参数的构造方法会
+         * 将对象中的authenticated字段设为false，而三个参数的构造方法会设为true。
+         */
+        val authentication = UsernamePasswordAuthenticationToken(
+            tokenUserMap[token], null, null
+        )
         SecurityContextHolder.getContext().authentication = authentication
         filterChain.doFilter(request, response)
     }

@@ -52,10 +52,9 @@ class SecurityConfig {
     @Order(2)
     @Bean
     fun defaultSecurityFilterChain(http: HttpSecurity): SecurityFilterChain = http.run {
-        val whiteList = arrayOf(
-            //允许登录和注册
+        val permitList = arrayOf(
+            //允许注册
             "/user/info",
-            "/user/login",
             /*
              * 在不设置ExceptionHandler的情况下，若接口逻辑中抛出异常，Spring会默认将请求转发到/error路径。
              * 若不设置放行/error，则在访问白名单接口且白名单接口抛出异常时，不会返回任何与接口逻辑有关的错误
@@ -63,14 +62,17 @@ class SecurityConfig {
              */
             "/error"
         )
+        val anonymousList = arrayOf(
+            "/user/login"
+        )
         /*
          * 在这里配置的拦截与放行规则会在AuthorizationFilter中被使用，该过滤器在默认情况下为FilterChain中
          * 优先级最低的过滤器。
          */
         authorizeHttpRequests {
-            it.requestMatchers(*whiteList).permitAll()
+            it.requestMatchers(*permitList).permitAll()
             //设置仅允许在未登录的情况下访问的接口
-            it.requestMatchers("/user/test").anonymous()
+            it.requestMatchers(*anonymousList).anonymous()
             //设置其他所有请求都需要认证
             it.anyRequest().authenticated()
         }
@@ -82,9 +84,10 @@ class SecurityConfig {
              * 忽略，则仅在通过GET方式请求/test接口时能够正常访问，即使在authorizeHttpRequests中对该接
              * 口设置了白名单，其他方式的请求依旧会被拦截。
              */
-            it.ignoringRequestMatchers(*whiteList)
+            it.ignoringRequestMatchers(*permitList, *anonymousList)
         }
-        addFilterBefore(LoginFilter, AuthorizationFilter::class.java)
+        //添加能够识别自定义登录态，并将其放入SecurityContextHolder中的处理器
+        addFilterBefore(CustomLoginStatusFilter, AuthorizationFilter::class.java)
         //设置自定义的Security异常处理器，用于处理未登录、无权访问等情况
         exceptionHandling {
             /*

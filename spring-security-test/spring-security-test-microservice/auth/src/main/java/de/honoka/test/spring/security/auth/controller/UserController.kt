@@ -4,7 +4,7 @@ import cn.hutool.json.JSONObject
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import de.honoka.sdk.util.framework.web.ApiResponse
 import de.honoka.test.spring.security.auth.entity.User
-import de.honoka.test.spring.security.auth.security.LoginFilter
+import de.honoka.test.spring.security.auth.security.CustomLoginStatusFilter
 import de.honoka.test.spring.security.auth.service.UserService
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -32,10 +32,7 @@ class UserController(private val userService: UserService) {
         val token = UUID.randomUUID().toString()
         val user = userService.baseMapper.findByUsername(body["username"] as String)
         user ?: throw RuntimeException("用户不存在")
-        LoginFilter.tokenUserMap[token] = user
+        CustomLoginStatusFilter.tokenUserMap[token] = user
         return ApiResponse.success(JSONObject().set("token", token))
     }
-
-    @GetMapping("/test")
-    fun test(): ApiResponse<*> = ApiResponse.success("hello")
 }

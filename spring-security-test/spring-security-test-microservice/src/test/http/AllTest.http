@@ -9,10 +9,6 @@ Content-Type: application/json
 
 ###
 GET {{auth}}/user/info/admin
-#X-Token: 3bae915e-884a-4ed4-9d4b-3f623aa5c397
-
-###
-GET {{auth}}/user/test
 
 ###
 POST {{auth}}/user/login

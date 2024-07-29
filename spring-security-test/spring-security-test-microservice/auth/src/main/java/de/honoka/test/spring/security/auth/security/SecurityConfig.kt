@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.core.AuthorizationGrantType
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod
-import org.springframework.security.oauth2.core.oidc.OidcScopes
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient
@@ -26,6 +25,7 @@ import org.springframework.security.oauth2.server.authorization.settings.Authori
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.access.intercept.AuthorizationFilter
+import org.springframework.security.web.context.SecurityContextHolderFilter
 import java.security.KeyPairGenerator
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
@@ -45,6 +45,21 @@ class SecurityConfig {
      * 例如，此处创建了一个SecurityFilterChain，@Order的值为2，则当另一个Bean通过@Resource或构造器参数等方式注入
      * List<SecurityFilterChain>类型的字段或构造器参数时，此处创建的SecurityFilterChain会排在List中的第二个（根据
      * Order注解的值进行排序，排第二位，而不是因为注解值为2，从而被放在List中的第二位）。
+     */
+    /*
+     * Spring Boot 3.0以上所使用的Spring Security在进行配置时，与之前版本有所不同，可以通过在配置类中
+     * 定义多个SecurityFilterChain的方式，来实现针对不同接口的配置。
+     * 用于定义SecurityFilterChain的方法，需要传入HttpSecurity，并在代码中对HttpSecurity进行配置，
+     * HttpSecurity可以通过build方法生成SecurityFilterChain。
+     * 每个SecurityFilterChain代表一套独立的配置，可以通过在HttpSecurity中调用securityMatcher方法，
+     * 来指定这套配置要作用于哪些URL路径。
+     * 若存在多个SecurityFilterChain可同时对一些路径生效，可通过@Order注解来指定它们的优先级，任何一个
+     * 请求都只能被一个SecurityFilterChain处理。
+     * Spring会根据配置类中定义的每个SecurityFilterChain的具体配置，为它们各自生成一个FilterChainProxy
+     * 和包含在FilterChainProxy中的一套Filter。SecurityFilterChain互相之间不共用FilterChainProxy和其中
+     * 的Filter，它们各自拥有的FilterChainProxy和其中的Filter，是完全根据各自的配置，各自生成的一套对象。
+     * 每个SecurityFilterChain所拥有的FilterChainProxy和一套Filter均与其他SecurityFilterChain所拥有的
+     * 这些对象各不相同（Filter的数量、顺序、类型、hashCode等均有不同），完全独立。
      */
     /**
      * Spring Security的路径拦截、跳转与放行规则等配置
@@ -104,13 +119,14 @@ class SecurityConfig {
          * 该拦截器会在请求方访问/login路径时直接向请求方返回登录页面的HTML内容作为响应，并不再执行后面
          * 的AuthorizationFilter以校验请求方是否有/login路径的访问权限，因此可以认为调用formLogin方法
          * 默认放行了/login路径。
+         * 若在exceptionHandling中配置了authenticationEntryPoint，则formLogin不会生效。
          */
         //formLogin(Customizer.withDefaults())
         build()
     }
 
     /**
-     * OAuth2与OpenID Connect（OIDC）的相关配置
+     * OAuth2的相关配置
      */
     @Order(1)
     @Bean
@@ -126,9 +142,12 @@ class SecurityConfig {
          */
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(this)
         getConfigurer(OAuth2AuthorizationServerConfigurer::class.java).run {
-            //启用OpenID Connect
-            oidc(Customizer.withDefaults())
+            authorizationEndpoint {
+                //设置自定义授权确认页面路径
+                it.consentPage("/oauth2/consent")
+            }
         }
+        addFilterAfter(CustomLoginStatusFilter, SecurityContextHolderFilter::class.java)
         exceptionHandling {
             it.authenticationEntryPoint(AuthenticationEntryPointImpl)
             it.accessDeniedHandler(AccessDeniedHandlerImpl)
@@ -146,10 +165,16 @@ class SecurityConfig {
      */
     @Bean
     fun registeredClientRepository(): RegisteredClientRepository {
-        val oidcClient = RegisteredClient.withId(UUID.randomUUID().toString()).run {
+        val gatewayClient = RegisteredClient.withId(UUID.randomUUID().toString()).run {
             clientId("spring-security-test-gateway")
             clientSecret(passwordEncoder.encode("123456"))
-            //请求授权码时使用默认的认证方式
+            /*
+             * 通过/oauth2/token接口提供授权码以获取token时，使用默认的认证方式（用于校验是哪个用户在为指定的
+             * 第三方应用请求token）
+             * Basic：指的是在Authorization请求头中使用“Basic {base64}”的方式请求授权码，其中base64的内容为
+             * “{clientId}:{clientSecret（明文）}”的base64编码（不含大括号）。
+             * Post：指的是在POST请求体中附带client_id与client_secret（明文）两个参数。
+             */
             clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
             //配置授权码模式，刷新令牌，客户端模式
@@ -161,17 +186,24 @@ class SecurityConfig {
             //用户在认证服务中登出后，需要跳转到的地址
             postLogoutRedirectUri("https://www.sogou.com")
             //设置客户端权限范围
-            scope(OidcScopes.OPENID)
-            scope(OidcScopes.PROFILE)
+            scope("all")
             clientSettings(ClientSettings.builder().run {
-                //客户端在请求认证服务获取授权码时，需要由用户在网页上进行授权
+                /*
+                 * 客户端在请求认证服务获取授权码时，需要先重定向到用于确认授权的路径（既可能是网页也可能是
+                 * 接口）。Spring在返回重定向响应时，除了用于确认授权的路径，还会额外附带三个参数：
+                 * client_id：OAuth2客户端名
+                 * state：用于在通过POST方式请求/oauth2/authorize验证请求合法性（确保在请求之前打开过用于
+                 * 确认授权的路径）
+                 * scope：可供用户选择的访问内容，空格隔开
+                 *
+                 */
                 requireAuthorizationConsent(true)
                 build()
             })
             build()
         }
         //配置基于内存的客户端信息
-        return InMemoryRegisteredClientRepository(oidcClient)
+        return InMemoryRegisteredClientRepository(gatewayClient)
     }
 
     //JWK相关资料：https://datatracker.ietf.org/doc/html/draft-ietf-jose-json-web-key-41

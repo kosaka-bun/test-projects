@@ -18,11 +18,20 @@ Content-Type: application/json
   "username": "admin"
 }
 
+> {% client.global.set("x_token", response.body["data"].token) %}
+
 ###
 # 浏览器打开
 # redirect_uri不可省略，其必须是SecurityConfig中所配置的oidcClient的redirectUri中的其中一个，否则报告400
-GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=spring-security-test-gateway&scope=profile+openid&redirect_uri=https%3A%2F%2Fwww.baidu.com
-Authorization: 4hhs45ydfgdfg
+GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=spring-security-test-gateway&scope=all&redirect_uri=https%3A%2F%2Fwww.baidu.com
+X-Token: {{x_token}}
+
+###
+POST {{auth}}/oauth2/authorize
+Content-Type: application/x-www-form-urlencoded
+X-Token: {{x_token}}
+
+client_id=spring-security-test-gateway&state=FDspgDdy1vOMMTtTpXuDJoAi2VtLwOizYuQjFi07jms=&scope=all
 
 ###
 POST http://localhost:8081/oauth2/token
@@ -31,4 +40,4 @@ Content-Type: application/x-www-form-urlencoded
 Authorization: Basic c3ByaW5nLXNlY3VyaXR5LXRlc3QtZ2F0ZXdheToxMjM0NTY=
 
 grant_type=authorization_code&code
-=WFj6qUNlcO21ik2izBnZIm_wIYPElLPRdWPET5Q6cOKLQ5fURotYluZUjHoHFvJveZXeqiunTu6H9n-YW9mfsSUgkh4WRnS2mU3xIoavUVFK7eswUVi-xL9vyjAVm3VQ&redirect_uri=https%3A%2F%2Fwww.baidu.com
+=MuIaAVwN_2OA7b7_ZN8hQ1FK7KTVd9MLJ2Ao95O-3a3an-VD2hGEL_H-7zjplqQnvhEZe01WLCOvdgxuQhXHd7cMbuxolqrPVTdVStH-0wtdiRXihX_BUxQnA3TJmLos&redirect_uri=https%3A%2F%2Fwww.baidu.com

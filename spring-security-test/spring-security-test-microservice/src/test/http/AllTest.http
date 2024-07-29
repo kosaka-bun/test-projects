@@ -46,10 +46,18 @@ Content-Type: application/x-www-form-urlencoded
 Authorization: Basic c3ByaW5nLXNlY3VyaXR5LXRlc3QtZ2F0ZXdheToxMjM0NTY=
 
 grant_type=authorization_code&code
-=qwJVurIi-CHQz9FYOVa9duZxjyvHs5daCgBCXdsxu8Y1c_azNakR6-ZOL2CAHFfmjd0S00it0FF0g4zYBh009xWbNKqsfS4MOOyPh8czCH1zccPnBEJrHC141xAH6Qao&redirect_uri=https%3A%2F%2Fwww.baidu.com
+=Jy2WkHKkRKjBBdD5WhdyCnUCZdBTayUDKIkVTFkOfDc3Mk7yWHYbalvDDk6DqlROvgq6_3q5NndfSThkkgtFI5HHolUdVaWQLfi5thzNgC2eCUAZueegeVfpHqPMiD9d&redirect_uri=https%3A%2F%2Fwww.baidu.com
 
 > {% client.global.set('oauth2_token', response.body['access_token']) %}
 
 ###
 GET {{business1_base_url}}/res1
+Authorization: Bearer {{oauth2_token}}
+
+###
+GET {{business1_base_url}}/res2
+Authorization: Bearer {{oauth2_token}}
+
+###
+GET {{business2_base_url}}/res1
 Authorization: Bearer {{oauth2_token}}

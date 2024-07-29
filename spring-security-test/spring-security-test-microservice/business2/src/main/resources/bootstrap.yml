@@ -1,20 +1,14 @@
 server:
-  port: 8082
+  port: 8083
 
 spring:
   application:
-    name: spring-security-test-business1
+    name: spring-security-test-business2
   cloud:
     nacos:
       server-addr: vm.honoka.de:8848
       username: root
       password: 123456
-    openfeign:
-      client:
-        config:
-          spring-security-test-business2:
-            request-interceptors:
-              - de.honoka.test.spring.security.business1.util.Oauth2FeignInterceptor
     loadbalancer:
       nacos:
         enabled: true

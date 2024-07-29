@@ -47,6 +47,7 @@ subprojects {
         implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
         implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery")
         implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config")
+        implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
         implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer")
         implementation(libs.honoka.framework.utils)
         implementation("cn.hutool:hutool-all:5.8.18")

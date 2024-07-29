@@ -1,5 +1,5 @@
 ###
-POST {{auth}}/user/info
+POST {{auth_base_url}}/user/info
 Content-Type: application/json
 
 {
@@ -8,17 +8,18 @@ Content-Type: application/json
 }
 
 ###
-GET {{auth}}/user/info/admin
+GET {{auth_base_url}}/user/info/admin
+X-Token: {{x_token}}
 
 ###
-POST {{auth}}/user/login
+POST {{auth_base_url}}/user/login
 Content-Type: application/json
 
 {
   "username": "admin"
 }
 
-> {% client.global.set("x_token", response.body["data"].token) %}
+> {% client.global.set('x_token', response.body['data'].token) %}
 
 ###
 # 浏览器打开
@@ -26,18 +27,29 @@ Content-Type: application/json
 GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=spring-security-test-gateway&scope=all&redirect_uri=https%3A%2F%2Fwww.baidu.com
 X-Token: {{x_token}}
 
+> {%
+　let resIsObject = (typeof response.body) === 'object' && response.body['data'] != null
+  client.global.set('authorize_state', resIsObject ? response.body['data']['consent']['state'] : '')
+%}
+
 ###
-POST {{auth}}/oauth2/authorize
+POST {{auth_base_url}}/oauth2/authorize
 Content-Type: application/x-www-form-urlencoded
 X-Token: {{x_token}}
 
-client_id=spring-security-test-gateway&state=FDspgDdy1vOMMTtTpXuDJoAi2VtLwOizYuQjFi07jms=&scope=all
+client_id=spring-security-test-gateway&state={{authorize_state}}&scope=all
 
 ###
-POST http://localhost:8081/oauth2/token
+POST {{auth_base_url}}/oauth2/token
 Content-Type: application/x-www-form-urlencoded
 # Authorization的值为SecurityConfig中所配置的oidcClient的clientId与clientSecret（原文），用冒号拼接，然后base64编码
 Authorization: Basic c3ByaW5nLXNlY3VyaXR5LXRlc3QtZ2F0ZXdheToxMjM0NTY=
 
 grant_type=authorization_code&code
-=MuIaAVwN_2OA7b7_ZN8hQ1FK7KTVd9MLJ2Ao95O-3a3an-VD2hGEL_H-7zjplqQnvhEZe01WLCOvdgxuQhXHd7cMbuxolqrPVTdVStH-0wtdiRXihX_BUxQnA3TJmLos&redirect_uri=https%3A%2F%2Fwww.baidu.com
+=qwJVurIi-CHQz9FYOVa9duZxjyvHs5daCgBCXdsxu8Y1c_azNakR6-ZOL2CAHFfmjd0S00it0FF0g4zYBh009xWbNKqsfS4MOOyPh8czCH1zccPnBEJrHC141xAH6Qao&redirect_uri=https%3A%2F%2Fwww.baidu.com
+
+> {% client.global.set('oauth2_token', response.body['access_token']) %}
+
+###
+GET {{business1_base_url}}/res1
+Authorization: Bearer {{oauth2_token}}

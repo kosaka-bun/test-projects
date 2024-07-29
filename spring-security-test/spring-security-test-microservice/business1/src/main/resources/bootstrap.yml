@@ -1,0 +1,38 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: spring-security-test-business1
+  cloud:
+    nacos:
+      server-addr: vm.honoka.de:8848
+      username: root
+      password: 123456
+    loadbalancer:
+      nacos:
+        enabled: true
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: http://localhost:8081
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:./data/${spring.application.name}.db
+  data:
+    redis:
+      host: vm.honoka.de
+      port: 6379
+      password: 123456
+      database: 0
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.community.dialect.SQLiteDialect
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8

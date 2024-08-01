@@ -45,4 +45,4 @@ mybatis-plus:
 
 logging:
   level:
-    de.honoka.test.spring.security.business1.mapper: debug
+    de.honoka.test.spring.security.business2.mapper: debug

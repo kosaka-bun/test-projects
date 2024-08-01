@@ -30,6 +30,8 @@ import java.security.KeyPairGenerator
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.util.*
+import kotlin.apply
+import kotlin.apply as kApply
 
 @EnableWebSecurity
 @Configuration
@@ -66,7 +68,7 @@ class SecurityConfig {
      */
     @Order(2)
     @Bean
-    fun defaultSecurityFilterChain(http: HttpSecurity): SecurityFilterChain = http.run {
+    fun defaultSecurityFilterChain(http: HttpSecurity): SecurityFilterChain = http.kApply {
         val permitList = arrayOf(
             //允许注册
             "/user/info",
@@ -122,15 +124,14 @@ class SecurityConfig {
          * 若在exceptionHandling中配置了authenticationEntryPoint，则formLogin不会生效。
          */
         //formLogin(Customizer.withDefaults())
-        build()
-    }
+    }.build()
 
     /**
      * OAuth2的相关配置
      */
     @Order(1)
     @Bean
-    fun authorizationServerSecurityFilterChain(http: HttpSecurity): SecurityFilterChain = http.run {
+    fun authorizationServerSecurityFilterChain(http: HttpSecurity): SecurityFilterChain = http.kApply {
         /*
          * OAuth2AuthorizationServerConfiguration是针对OAuth2的默认@Configuration类，通过此方法为
          * http对象进行默认配置。
@@ -156,21 +157,21 @@ class SecurityConfig {
             //使用JWT处理接收到的Access Token
             it.jwt(Customizer.withDefaults())
         }
-        build()
-    }
+    }.build()
 
     //查询认证服务器信息：http://localhost:8081/.well-known/openid-configuration
     /**
-     * 通过手动组装OAuth客户端的方式，创建一个基于内存的RegisteredClientRepository
+     * 通过手动组装OAuth2客户端的方式，创建一个基于内存的RegisteredClientRepository
      */
     @Bean
     fun registeredClientRepository(): RegisteredClientRepository {
-        val gatewayClient = RegisteredClient.withId(UUID.randomUUID().toString()).run {
-            clientId("spring-security-test-gateway")
+        val gatewayClient = RegisteredClient.withId(UUID.randomUUID().toString()).apply {
+            val id = "oauth2-client1"
+            clientId(id)
             clientSecret(passwordEncoder.encode("123456"))
             /*
              * 通过/oauth2/token接口提供授权码以获取token时，使用默认的认证方式（用于校验是哪个用户在为指定的
-             * 第三方应用请求token）
+             * 第三方应用请求token）。
              * Basic：指的是在Authorization请求头中使用“Basic {base64}”的方式请求授权码，其中base64的内容为
              * “{clientId}:{clientSecret（明文）}”的base64编码（不含大括号）。
              * Post：指的是在POST请求体中附带client_id与client_secret（明文）两个参数。
@@ -182,12 +183,11 @@ class SecurityConfig {
             authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
             //用户确认授权后，请求以下回调地址，并在请求参数中携带code参数（授权码）
+            redirectUri("http://localhost:8084/login/oauth2/code/$id")
             redirectUri("https://www.baidu.com")
-            //用户在认证服务中登出后，需要跳转到的地址
-            postLogoutRedirectUri("https://www.sogou.com")
             //设置客户端权限范围
             scope("all")
-            clientSettings(ClientSettings.builder().run {
+            clientSettings(ClientSettings.builder().apply {
                 /*
                  * 客户端在请求认证服务获取授权码时，需要先重定向到用于确认授权的路径（既可能是网页也可能是
                  * 接口）。Spring在返回重定向响应时，除了用于确认授权的路径，还会额外附带三个参数：
@@ -195,13 +195,10 @@ class SecurityConfig {
                  * state：用于在通过POST方式请求/oauth2/authorize验证请求合法性（确保在请求之前打开过用于
                  * 确认授权的路径）
                  * scope：可供用户选择的访问内容，空格隔开
-                 *
                  */
                 requireAuthorizationConsent(true)
-                build()
-            })
-            build()
-        }
+            }.build())
+        }.build()
         //配置基于内存的客户端信息
         return InMemoryRegisteredClientRepository(gatewayClient)
     }

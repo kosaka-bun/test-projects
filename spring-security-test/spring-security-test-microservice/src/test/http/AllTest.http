@@ -23,8 +23,9 @@ Content-Type: application/json
 
 ###
 # 浏览器打开
-# redirect_uri不可省略，其必须是SecurityConfig中所配置的oidcClient的redirectUri中的其中一个，否则报告400
-GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=spring-security-test-gateway&scope=all&redirect_uri=https%3A%2F%2Fwww.baidu.com
+# redirect_uri不可省略，其必须是SecurityConfig中所配置的client的redirectUri中的其中一个，否则报告400
+GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=oauth2-client1&scope=all&redirect_uri=http
+    %3A%2F%2Flocalhost:8084%2Flogin%2Foauth2%2Fcode%2Foauth2-client1
 X-Token: {{x_token}}
 
 > {%
@@ -33,20 +34,31 @@ X-Token: {{x_token}}
 %}
 
 ###
+GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=oauth2-client1&scope=all&redirect_uri=https
+    %3A%2F%2Fwww.baidu.com
+X-Token: {{x_token}}
+
+> {%
+　let resIsObject = (typeof response.body) === 'object' && response.body['data'] != null
+  client.global.set('authorize_state', resIsObject ? response.body['data']['consent']['state'] : '')
+%}
+
+###
+# @no-redirect
 POST {{auth_base_url}}/oauth2/authorize
 Content-Type: application/x-www-form-urlencoded
 X-Token: {{x_token}}
 
-client_id=spring-security-test-gateway&state={{authorize_state}}&scope=all
+client_id=oauth2-client1&state={{authorize_state}}&scope=all
 
 ###
 POST {{auth_base_url}}/oauth2/token
 Content-Type: application/x-www-form-urlencoded
-# Authorization的值为SecurityConfig中所配置的oidcClient的clientId与clientSecret（原文），用冒号拼接，然后base64编码
-Authorization: Basic c3ByaW5nLXNlY3VyaXR5LXRlc3QtZ2F0ZXdheToxMjM0NTY=
+# Authorization的值为SecurityConfig中所配置的client的clientId与clientSecret（原文），用冒号拼接，然后base64编码
+Authorization: Basic b2F1dGgyLWNsaWVudDE6MTIzNDU2
 
 grant_type=authorization_code&code
-=Jy2WkHKkRKjBBdD5WhdyCnUCZdBTayUDKIkVTFkOfDc3Mk7yWHYbalvDDk6DqlROvgq6_3q5NndfSThkkgtFI5HHolUdVaWQLfi5thzNgC2eCUAZueegeVfpHqPMiD9d&redirect_uri=https%3A%2F%2Fwww.baidu.com
+=OAcWsi3Xyepq6RK5bOy-QOm0foWbnK6OB8xbeQpyJL2KEkAtdTgZDFBmoiZ_hYnALYsavJzZa5YeA7pFTdWsvRHwzFPOte0fRt3F5RzMi4_eQPwPeLotgksTRpIK0FGq&redirect_uri=http%3A%2F%2Flocalhost:8084%2Flogin%2Foauth2%2Fcode%2Foauth2-client1
 
 > {% client.global.set('oauth2_token', response.body['access_token']) %}
 
@@ -61,3 +73,10 @@ Authorization: Bearer {{oauth2_token}}
 ###
 GET {{business2_base_url}}/res1
 Authorization: Bearer {{oauth2_token}}
+
+###
+GET {{auth_client1_base_url}}/test1
+
+###
+GET {{auth_client1_base_url}}/login/oauth2/code/oauth2-client1?code=SaaAJNm-8sGx_O2sjzFyfqRvB6_Os_iifGWevZsFjC7e
+    -9ekMQo-DW1Lg_AtG6KvOW5T5M93W-bANJrpSRmy_iY88Ze8sTUculkE5kdc2e2LNJlAFIl9EO6-RgGIuSg0

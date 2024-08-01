@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8084
 
 spring:
   application:
-    name: spring-security-test-auth
+    name: spring-security-test-auth-client-1
   cloud:
     nacos:
       server-addr: vm.honoka.de:8848
@@ -12,6 +12,24 @@ spring:
     loadbalancer:
       nacos:
         enabled: true
+  security:
+    oauth2:
+      client:
+        provider:
+          auth-server:
+            issuer-uri: http://localhost:8081
+            authorization-uri: http://localhost:8081/oauth2/authorize
+            token-uri: http://localhost:8081/oauth2/token
+        registration:
+          oauth2-client1:
+            provider: auth-server
+            client-id: oauth2-client1
+            client-name: oauth2-client1
+            client-secret: 123456
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8084/login/oauth2/code/oauth2-client1
+            scope: all
   datasource:
     driver-class-name: org.sqlite.JDBC
     url: jdbc:sqlite:./data/${spring.application.name}.db
@@ -41,4 +59,4 @@ mybatis-plus:
 logging:
   level:
     org.springframework.security: trace
-    de.honoka.test.spring.security.auth.mapper: debug
+    de.honoka.test.spring.security.authclient1.mapper: debug

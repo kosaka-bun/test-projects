@@ -13,13 +13,10 @@ import org.springframework.web.filter.OncePerRequestFilter
  */
 object CustomLoginStatusFilter : OncePerRequestFilter() {
 
+    //临时登录态
     val tokenUserMap = HashMap<String, User>()
 
-    override fun doFilterInternal(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        filterChain: FilterChain
-    ) {
+    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val token = request.getHeader("X-Token") ?: request.getParameter("x_token")
         if(token?.isBlank() == true || !tokenUserMap.containsKey(token)) {
             filterChain.doFilter(request, response)

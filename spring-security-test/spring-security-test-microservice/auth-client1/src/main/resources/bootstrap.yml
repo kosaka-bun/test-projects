@@ -20,6 +20,7 @@ spring:
             issuer-uri: http://localhost:8081
             authorization-uri: http://localhost:8081/oauth2/authorize
             token-uri: http://localhost:8081/oauth2/token
+            user-info-uri: http://localhost:8081/user/info
         registration:
           oauth2-client1:
             provider: auth-server

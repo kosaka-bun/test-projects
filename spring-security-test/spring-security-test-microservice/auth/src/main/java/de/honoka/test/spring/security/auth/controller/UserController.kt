@@ -13,6 +13,9 @@ import java.util.*
 @RestController
 class UserController(private val userService: UserService) {
 
+    @GetMapping("/info")
+    fun info(): JSONObject = JSONObject().set("sub", "admin")
+
     @PostMapping("/info")
     fun add(@RequestBody user: User): ApiResponse<*> {
         userService.save(user)

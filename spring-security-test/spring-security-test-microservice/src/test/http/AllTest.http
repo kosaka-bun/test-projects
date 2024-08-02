@@ -9,7 +9,8 @@ Content-Type: application/json
 
 ###
 GET {{auth_base_url}}/user/info/admin
-X-Token: {{x_token}}
+#X-Token: {{x_token}}
+Authorization: Bearer eyJraWQiOiI2MTg0ZTk0ZS0yNjg5LTQ2OTMtOTkxMi1lZDA5Y2VlMmRkM2UiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6Im9hdXRoMi1jbGllbnQxIiwibmJmIjoxNzIyNTI3NTc0LCJzY29wZSI6WyJhbGwiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxIiwiZXhwIjoxNzIyNTI3ODc0LCJpYXQiOjE3MjI1Mjc1NzQsImp0aSI6Ijk2ZDZiYjI2LTk2OTItNDM4Ni1iZjQwLWY3MDczZGMwNjRlNSJ9.krZUhGkxQMxXG3VwWyZGfjyvySTzinyIwYGGGRrV6JsxSHs1jvDFiFisEs9erHUfTCWaOZailj1DH5P26UcywAjDaSq5phLeIU8tKU_eFiyWxRKCOZKm0VXvw3N2sm5DrgBcFvk8Lrz7GArsigGxdUr55q9fnQU5Pys4fdYZQLPgtpYriVjvKcYJxczUegvdC_jSAujaQOXfPa83I4f7BZCG4tH9W1dnPz87r-yhv-CXnMBSGxE3JGHpZbQGcC6z8_PRD8vnSAlj0UtOrcCh2pD3MPvOxjA47Ib9eklMiUu5CkN1X79uwukPwoDbKK_Exv6WPdv0cKQF_vscGrlRuA
 
 ###
 POST {{auth_base_url}}/user/login
@@ -24,8 +25,7 @@ Content-Type: application/json
 ###
 # 浏览器打开
 # redirect_uri不可省略，其必须是SecurityConfig中所配置的client的redirectUri中的其中一个，否则报告400
-GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=oauth2-client1&scope=all&redirect_uri=http
-    %3A%2F%2Flocalhost:8084%2Flogin%2Foauth2%2Fcode%2Foauth2-client1
+GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=oauth2-client1&scope=all&redirect_uri=http%3A%2F%2Flocalhost:8084%2Flogin%2Foauth2%2Fcode%2Foauth2-client1
 X-Token: {{x_token}}
 
 > {%
@@ -34,8 +34,7 @@ X-Token: {{x_token}}
 %}
 
 ###
-GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=oauth2-client1&scope=all&redirect_uri=https
-    %3A%2F%2Fwww.baidu.com
+GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=oauth2-client1&scope=all&redirect_uri=https%3A%2F%2Fwww.baidu.com
 X-Token: {{x_token}}
 
 > {%
@@ -44,7 +43,6 @@ X-Token: {{x_token}}
 %}
 
 ###
-# @no-redirect
 POST {{auth_base_url}}/oauth2/authorize
 Content-Type: application/x-www-form-urlencoded
 X-Token: {{x_token}}
@@ -58,7 +56,17 @@ Content-Type: application/x-www-form-urlencoded
 Authorization: Basic b2F1dGgyLWNsaWVudDE6MTIzNDU2
 
 grant_type=authorization_code&code
-=OAcWsi3Xyepq6RK5bOy-QOm0foWbnK6OB8xbeQpyJL2KEkAtdTgZDFBmoiZ_hYnALYsavJzZa5YeA7pFTdWsvRHwzFPOte0fRt3F5RzMi4_eQPwPeLotgksTRpIK0FGq&redirect_uri=http%3A%2F%2Flocalhost:8084%2Flogin%2Foauth2%2Fcode%2Foauth2-client1
+=bV9qtAiRQOBhwk5PC2K65J6OGs9UpJTlbQ-2u_qc15nXf1b70DzH9yIGKuK7i92EP4kIQsl9IEqd6x-9_ak7B7zlChuFZbyQgO86VjkLk9VSHI3f1Ei3Mlb8VbPcfBGg&redirect_uri=http%3A%2F%2Flocalhost:8084%2Flogin%2Foauth2%2Fcode%2Foauth2-client1
+
+> {% client.global.set('oauth2_token', response.body['access_token']) %}
+
+###
+POST {{auth_base_url}}/oauth2/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic b2F1dGgyLWNsaWVudDE6MTIzNDU2
+
+grant_type=authorization_code&code
+=2Pi9WwLSeFF8ycWCYkbQT-94F_K8oKUqodILH-uzUuIduLMaOKJ6oQnqaTIgN4sFpU1buEt14aX-dvjnY_DJhFTMkT-qVMV4hzjUlsYon5zBbxZAH37aC5g-Qt1MOidH&redirect_uri=https%3A%2F%2Fwww.baidu.com
 
 > {% client.global.set('oauth2_token', response.body['access_token']) %}
 
@@ -75,8 +83,18 @@ GET {{business2_base_url}}/res1
 Authorization: Bearer {{oauth2_token}}
 
 ###
+# @no-redirect
 GET {{auth_client1_base_url}}/test1
+Authorization: Bearer eyJraWQiOiI2YjVlZTgzMy1mNWE3LTRjYjQtOTE0Yy1mYmFmYmJiZjBiZmIiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6Im9hdXRoMi1jbGllbnQxIiwibmJmIjoxNzIyNTg5NjA2LCJzY29wZSI6WyJhbGwiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxIiwiZXhwIjoxNzIyNTg5OTA2LCJpYXQiOjE3MjI1ODk2MDYsImp0aSI6IjhkOWY3ZDE0LTMxMWYtNDU3NS1iMGU4LWUzMTMzYzhjNGQ2NCJ9.thVUe2Bu35AuOBOFU9YbP1gAXJa1szBGSsyaZo94Eq46w4BU9FKP-YkLa4RRUEATeWCEfSZRYAKqgUDjEJm_0H4Ljkko1aAWRCSa-Np_zH4PzJlzGF6UOY-qAd_C9cKzPal_SWLF8fyXA1pNcbkEYsvcjiEBTTb_qG8j_9KvlCQ1JQzSHVCp34QTFwWGWtj9XxmT3t1_1ltNcPIXb5Xvy117s20HUI8ljkBeXeyuzkywmmmv4Ok-SvSYHkh2CzNq-vSK1OotbhBxLQCUsgA6i2gltdaLD5Oou9tw3PDINCz0i13QnfZMsDN5jy8zUS3zN32vXoVBuACWlh6Gh7HJ6g
 
 ###
-GET {{auth_client1_base_url}}/login/oauth2/code/oauth2-client1?code=SaaAJNm-8sGx_O2sjzFyfqRvB6_Os_iifGWevZsFjC7e
-    -9ekMQo-DW1Lg_AtG6KvOW5T5M93W-bANJrpSRmy_iY88Ze8sTUculkE5kdc2e2LNJlAFIl9EO6-RgGIuSg0
+# @no-redirect
+GET {{auth_client1_base_url}}/oauth2/authorization/oauth2-client1
+
+###
+# @no-redirect
+GET http://localhost:8081/oauth2/authorize?response_type=code&client_id=oauth2-client1&scope=all&state=IXEPPQXVuwCphNggJSaIXZMPUDaHA7OxU8WAEAw_l88%3D&redirect_uri=http://localhost:8084/login/oauth2/code/oauth2-client1
+X-Token: {{x_token}}
+
+###
+GET http://localhost:8084/login/oauth2/code/oauth2-client1?code=4t4pOAZZTRbRQeS4_khYUF_FeQzLxpyJZaFmk0Xb2IJA9yLSm4j4vlsI_lVeCwD0upG_Ypaf_62Cy-j79SoHIDJFFdUdP_OaKr2wSDYaB6vnJh806n7aIuEvWpVuVT2S&state=IXEPPQXVuwCphNggJSaIXZMPUDaHA7OxU8WAEAw_l88%3D

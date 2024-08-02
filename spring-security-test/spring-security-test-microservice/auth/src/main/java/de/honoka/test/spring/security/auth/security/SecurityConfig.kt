@@ -93,6 +93,9 @@ class SecurityConfig {
             //设置其他所有请求都需要认证
             it.anyRequest().authenticated()
         }
+        oauth2ResourceServer {
+            it.jwt(Customizer.withDefaults())
+        }
         csrf {
             /*
              * 若不在此处对白名单中的URL表达式进行忽略，仅在authorizeHttpRequests中设置permitAll的话，

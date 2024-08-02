@@ -10,7 +10,7 @@ Content-Type: application/json
 ###
 GET {{auth_base_url}}/user/info/admin
 #X-Token: {{x_token}}
-Authorization: Bearer eyJraWQiOiI2MTg0ZTk0ZS0yNjg5LTQ2OTMtOTkxMi1lZDA5Y2VlMmRkM2UiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6Im9hdXRoMi1jbGllbnQxIiwibmJmIjoxNzIyNTI3NTc0LCJzY29wZSI6WyJhbGwiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxIiwiZXhwIjoxNzIyNTI3ODc0LCJpYXQiOjE3MjI1Mjc1NzQsImp0aSI6Ijk2ZDZiYjI2LTk2OTItNDM4Ni1iZjQwLWY3MDczZGMwNjRlNSJ9.krZUhGkxQMxXG3VwWyZGfjyvySTzinyIwYGGGRrV6JsxSHs1jvDFiFisEs9erHUfTCWaOZailj1DH5P26UcywAjDaSq5phLeIU8tKU_eFiyWxRKCOZKm0VXvw3N2sm5DrgBcFvk8Lrz7GArsigGxdUr55q9fnQU5Pys4fdYZQLPgtpYriVjvKcYJxczUegvdC_jSAujaQOXfPa83I4f7BZCG4tH9W1dnPz87r-yhv-CXnMBSGxE3JGHpZbQGcC6z8_PRD8vnSAlj0UtOrcCh2pD3MPvOxjA47Ib9eklMiUu5CkN1X79uwukPwoDbKK_Exv6WPdv0cKQF_vscGrlRuA
+Authorization: Bearer {{oauth2_token}}
 
 ###
 POST {{auth_base_url}}/user/login
@@ -56,7 +56,7 @@ Content-Type: application/x-www-form-urlencoded
 Authorization: Basic b2F1dGgyLWNsaWVudDE6MTIzNDU2
 
 grant_type=authorization_code&code
-=bV9qtAiRQOBhwk5PC2K65J6OGs9UpJTlbQ-2u_qc15nXf1b70DzH9yIGKuK7i92EP4kIQsl9IEqd6x-9_ak7B7zlChuFZbyQgO86VjkLk9VSHI3f1Ei3Mlb8VbPcfBGg&redirect_uri=http%3A%2F%2Flocalhost:8084%2Flogin%2Foauth2%2Fcode%2Foauth2-client1
+=xza9UBJj2YBwEYQiGhu3LGUX7F_lQ4U41Phu6MeBfSMwWTGyPa-SIwI65eNgTSUgvaTPDJgNQFKo1P3fNlEcYxmOiy3R-hyqAOzsjZiPcjNMESoEgUqbmghlzkMxrC5j&redirect_uri=http%3A%2F%2Flocalhost:8084%2Flogin%2Foauth2%2Fcode%2Foauth2-client1
 
 > {% client.global.set('oauth2_token', response.body['access_token']) %}
 
@@ -66,7 +66,7 @@ Content-Type: application/x-www-form-urlencoded
 Authorization: Basic b2F1dGgyLWNsaWVudDE6MTIzNDU2
 
 grant_type=authorization_code&code
-=2Pi9WwLSeFF8ycWCYkbQT-94F_K8oKUqodILH-uzUuIduLMaOKJ6oQnqaTIgN4sFpU1buEt14aX-dvjnY_DJhFTMkT-qVMV4hzjUlsYon5zBbxZAH37aC5g-Qt1MOidH&redirect_uri=https%3A%2F%2Fwww.baidu.com
+=xza9UBJj2YBwEYQiGhu3LGUX7F_lQ4U41Phu6MeBfSMwWTGyPa-SIwI65eNgTSUgvaTPDJgNQFKo1P3fNlEcYxmOiy3R-hyqAOzsjZiPcjNMESoEgUqbmghlzkMxrC5j&redirect_uri=https%3A%2F%2Fwww.baidu.com
 
 > {% client.global.set('oauth2_token', response.body['access_token']) %}
 

@@ -58,7 +58,7 @@ public class AllTest {
         URL resource2 = CodeUtils.class.getResource("/text.html");
         System.out.println(resource2);
         assert resource2 != null;
-        System.out.println(de.honoka.sdk.util.file.FileUtils.urlToString(resource2));
+        //System.out.println(de.honoka.sdk.util.file.FileUtils.urlToString(resource2));
     }
 
     @SneakyThrows

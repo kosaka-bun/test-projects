@@ -156,7 +156,7 @@ public class AllTestBackup {
     //@Test
     public void test8() {
         String relativePath = "xxxxx";
-        String classpath = FileUtils.getClasspath();
+        String classpath = FileUtils.getMainClasspath();
         String path = Path.of(classpath, relativePath).toString();
         System.out.println(classpath);
         System.out.println(path);
@@ -170,7 +170,7 @@ public class AllTestBackup {
                 Path.of("D:\\dir", "one", "two.dat"),
                 Path.of("D:\\dir\\", "one", "two.dat"),
                 Path.of("usr", "local", "bin"),
-                Path.of(FileUtils.getClasspath(), "one", "two")
+                Path.of(FileUtils.getMainClasspath(), "one", "two")
         );
         paths.forEach(p -> System.out.println(p.toString()));
     }

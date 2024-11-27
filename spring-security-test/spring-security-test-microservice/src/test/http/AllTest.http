@@ -9,7 +9,6 @@ Content-Type: application/json
 
 ###
 GET {{auth_base_url}}/user/info/admin
-#X-Token: {{x_token}}
 Authorization: Bearer {{oauth2_token}}
 
 ###
@@ -66,7 +65,7 @@ Content-Type: application/x-www-form-urlencoded
 Authorization: Basic b2F1dGgyLWNsaWVudDE6MTIzNDU2
 
 grant_type=authorization_code&code
-=xza9UBJj2YBwEYQiGhu3LGUX7F_lQ4U41Phu6MeBfSMwWTGyPa-SIwI65eNgTSUgvaTPDJgNQFKo1P3fNlEcYxmOiy3R-hyqAOzsjZiPcjNMESoEgUqbmghlzkMxrC5j&redirect_uri=https%3A%2F%2Fwww.baidu.com
+=Jqdy3iCilYJkN_inIJc2b8uhwnh28PQWwzNYZyiLrfSTQwY3IBklLyd249GwEN_YMkZQu2nEE9jnpCYvNVmuH2LsJevnuCQad2snuu4X2QM1gRUAsSwpvJEee3axXDev&redirect_uri=https%3A%2F%2Fwww.baidu.com
 
 > {% client.global.set('oauth2_token', response.body['access_token']) %}
 

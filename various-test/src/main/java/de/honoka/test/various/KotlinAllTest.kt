@@ -23,6 +23,7 @@ class KotlinAllTest {
         println(token)
         //验证
         val jwt2 = JWT(token).setKey(key)
+        println(jwt2.payloads)
         println(jwt2.validate(0))
         Thread.sleep(1000)
         println(jwt2.validate(0))

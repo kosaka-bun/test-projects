@@ -39,6 +39,7 @@ dependencies {
     implementation("cn.hutool:hutool-all:5.8.18")
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.5")
     runtimeOnly("org.xerial:sqlite-jdbc")
+    implementation("org.flywaydb:flyway-core")
     implementation("org.springframework.boot:spring-boot-configuration-processor".also {
         annotationProcessor(it)
     })

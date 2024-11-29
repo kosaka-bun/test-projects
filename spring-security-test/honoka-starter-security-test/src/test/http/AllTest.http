@@ -1,0 +1,13 @@
+POST {{base_url}}/login
+Content-Type: application/json
+
+> {% client.global.set('token', response.body['data']) %}
+
+###
+GET {{base_url}}/
+Authorization: Bearer {{token}}
+
+###
+POST {{base_url}}/logout
+Content-Type: application/json
+Authorization: Bearer {{token}}

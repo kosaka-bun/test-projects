@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+honoka:
+  starter:
+    security:
+      enabled: false
+      white-list:
+        - /login

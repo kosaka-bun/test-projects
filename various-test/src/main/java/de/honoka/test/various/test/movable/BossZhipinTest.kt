@@ -12,6 +12,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 import kotlin.io.path.Path
 import kotlin.io.path.absolute
+import kotlin.system.exitProcess
 
 @Suppress("MemberVisibilityCanBePrivate")
 object BossZhipinTest {
@@ -40,6 +41,7 @@ object BossZhipinTest {
     fun action() {
         initCookie()
         println(cookie)
+        exitProcess(0)
     }
     
     fun initCookie() {

@@ -3,8 +3,6 @@ package de.honoka.test.various;
 import cn.hutool.core.map.MapUtil;
 import de.honoka.sdk.util.code.CodeUtils;
 import lombok.SneakyThrows;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
 import java.io.*;
@@ -44,8 +42,8 @@ public class AllTest {
         System.out.println(chars);
     }
 
-    //@Test
     @SneakyThrows
+    //@Test
     public void test25() {
         byte[] utf8 = "\ufefftest��".getBytes(StandardCharsets.UTF_8);
         System.out.println(new String(utf8, "GBK"));
@@ -79,17 +77,6 @@ public class AllTest {
     }
 
     //@Test
-    @SneakyThrows
-    public void test22() {
-        try(FileOutputStream os = FileUtils.openOutputStream(
-                new File("xxxxx"))) {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
-            writer.write("test");
-            writer.close();
-        }
-    }
-
-    //@Test
     @SuppressWarnings("UnnecessaryUnicodeEscape")
     public void test21() {
         System.out.println("\u6d4b\u8bd5");
@@ -97,14 +84,6 @@ public class AllTest {
         Matcher matcher = pattern.matcher("测试文本123");
         if(matcher.find()) {
             System.out.println(matcher.group(0));
-        }
-    }
-
-    //@Test
-    public void test20() {
-        String[] arr = { "a", "b", "c", "d", "e" };
-        for(String s : ArrayUtils.subarray(arr, 2, arr.length)) {
-            System.out.println(s);
         }
     }
 }

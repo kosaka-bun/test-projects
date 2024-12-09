@@ -6,14 +6,14 @@ root = "1.0.0-dev"
 kotlin = "1.8.10"
 kotlin-coroutines = "1.6.4"
 spring-boot = "3.2.5"
-honoka-spring-boot-starter = "2.0.0-dev"
+honoka-spring-boot-starter = "1.0.1-dev"
 lombok = "1.18.26"
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-lombok = { id = "org.jetbrains.kotlin.plugin.lombok", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
-dependency-management = "io.spring.dependency-management:1.1.4"
+dependency-management = "io.spring.dependency-management:1.1.6"
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 
 [libraries]

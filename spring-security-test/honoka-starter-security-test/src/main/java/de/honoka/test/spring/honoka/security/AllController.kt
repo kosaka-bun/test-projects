@@ -1,8 +1,8 @@
 package de.honoka.test.spring.honoka.security
 
-import de.honoka.sdk.spring.starter.core.web.ApiResponse
 import de.honoka.sdk.spring.starter.security.DefaultUser
 import de.honoka.sdk.spring.starter.security.token.JwtUtils
+import de.honoka.sdk.util.web.ApiResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController

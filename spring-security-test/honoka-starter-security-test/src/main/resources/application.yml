@@ -4,6 +4,6 @@ server:
 honoka:
   starter:
     security:
-      enabled: false
+      enabled: true
       white-list:
         - /login

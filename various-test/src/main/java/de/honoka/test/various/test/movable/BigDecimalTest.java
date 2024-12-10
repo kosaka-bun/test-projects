@@ -12,8 +12,8 @@ public class BigDecimalTest {
     private final BigDecimal[] decimals;
 
     private final String[] values = {
-            "0", "1.2E3", "1.23456E2", "12.34567",
-            "0.1333333333333333333333333333333333"
+        "0", "1.2E3", "1.23456E2", "12.34567",
+        "0.1333333333333333333333333333333333"
     };
 
     {

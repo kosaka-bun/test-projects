@@ -1,30 +1,18 @@
 package de.honoka.test.various.old.p4
 
-import java.util.concurrent.SynchronousQueue
-import java.util.concurrent.ThreadPoolExecutor
-import java.util.concurrent.ThreadPoolExecutor.AbortPolicy
+import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
 object ThreadPoolTest {
     
-    private val executor = ThreadPoolExecutor(
-        3, 5, 10, TimeUnit.SECONDS,
-        SynchronousQueue(), AbortPolicy()
-    )
+    private val executor = ScheduledThreadPoolExecutor(1)
     
     @JvmStatic
     fun main(args: Array<String>) {
-        repeat(10) {
-            try {
-                executor.submit {
-                    println(it)
-                    TimeUnit.SECONDS.sleep(60)
-                }
-            } catch(t: Throwable) {
-                System.err.println("failed: $it")
-            }
-            TimeUnit.SECONDS.sleep(2)
-        }
+        executor.scheduleWithFixedDelay({
+            TimeUnit.SECONDS.sleep(3)
+            throw Exception().apply { printStackTrace() }
+        }, 0, 5, TimeUnit.SECONDS)
         TimeUnit.SECONDS.sleep(60)
     }
 }

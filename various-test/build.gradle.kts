@@ -27,7 +27,6 @@ dependencies {
     implementation("com.sobte.cqp:jcq:1.2.7")
     implementation("com.baomidou:mybatis-plus:3.5.2")
     implementation("org.seleniumhq.selenium:selenium-java:4.27.0")
-    implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.27.0")
     "org.projectlombok:lombok:1.18.26".let {
         compileOnly(it)
         annotationProcessor(it)

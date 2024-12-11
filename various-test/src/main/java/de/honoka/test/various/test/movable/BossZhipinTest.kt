@@ -57,6 +57,7 @@ object BossZhipinTest {
             //addArguments("--headless")
         })
         driver.run {
+            moveToCenter()
             devTools.run {
                 createSession()
                 send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()))

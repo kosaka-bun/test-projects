@@ -3,9 +3,49 @@ package de.honoka.test.various
 import cn.hutool.core.date.DateField
 import cn.hutool.core.date.DateTime
 import cn.hutool.jwt.JWT
+import de.honoka.sdk.util.kotlin.text.singleLine
 import org.junit.Test
 
 class KotlinAllTest {
+    
+    @Test
+    fun test2() {
+        val a = """
+            abc
+            def
+        """.singleLine()
+        println(a)
+        val b = """
+            abc
+            def |
+            ghi
+        """.singleLine()
+        println(b)
+        val c = """
+            abc
+            | def |
+            ghi
+        """.singleLine()
+        println(c)
+        val d = """
+            abc
+            | |
+            def
+        """.singleLine()
+        println(d)
+        val e = """
+            abc
+            |
+            def
+        """.singleLine()
+        println(e)
+        val f = """
+            abc
+            | | |
+            def
+        """.singleLine()
+        println(f)
+    }
 
     @Test
     fun test1() {

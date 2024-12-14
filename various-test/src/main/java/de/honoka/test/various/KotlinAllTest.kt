@@ -2,11 +2,35 @@ package de.honoka.test.various
 
 import cn.hutool.core.date.DateField
 import cn.hutool.core.date.DateTime
+import cn.hutool.http.HttpUtil
 import cn.hutool.jwt.JWT
+import de.honoka.sdk.util.kotlin.text.forEachWrapper
+import de.honoka.sdk.util.kotlin.text.simpleSingleLine
 import de.honoka.sdk.util.kotlin.text.singleLine
+import de.honoka.sdk.util.kotlin.text.toJsonWrapper
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 class KotlinAllTest {
+    
+    @Test
+    fun test3() {
+        val proxies = HttpUtil.get("https://www.docip.net/data/free.json").toJsonWrapper()
+        proxies.getArray("data").forEachWrapper {
+            val proxy = it.getStr("ip").split(":")
+            HttpUtil.createGet("http://httpbin.org/ip").run {
+                println(it.getStr("ip"))
+                setHttpProxy(proxy[0], proxy[1].toInt())
+                timeout(TimeUnit.SECONDS.toMillis(5).toInt())
+                runCatching {
+                    val res = execute()
+                    println(res.status)
+                    println(res.body())
+                }
+                println("\n")
+            }
+        }
+    }
     
     @Test
     fun test2() {
@@ -45,6 +69,18 @@ class KotlinAllTest {
             def
         """.singleLine()
         println(f)
+        val g = """
+            abc
+            def
+            ghi
+        """.simpleSingleLine(true)
+        println(g)
+        val h = """
+            abc,,
+            def,,
+            ,ghi,
+        """.singleLine(',', true)
+        println(h)
     }
 
     @Test

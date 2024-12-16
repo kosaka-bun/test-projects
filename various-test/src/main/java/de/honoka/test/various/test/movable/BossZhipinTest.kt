@@ -99,7 +99,7 @@ object BossZhipinTest {
             }
             logger.level = Level.OFF
         }
-        Thread.setDefaultUncaughtExceptionHandler { _, _ -> }
+        //Thread.setDefaultUncaughtExceptionHandler { _, _ -> }
     }
     
     fun handleResponse(devTools: DevTools, event: ResponseReceived) {

@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateField
 import cn.hutool.core.date.DateTime
 import cn.hutool.http.HttpUtil
 import cn.hutool.jwt.JWT
+import de.honoka.sdk.util.kotlin.net.http.browserApiHeaders
 import de.honoka.sdk.util.kotlin.text.forEachWrapper
 import de.honoka.sdk.util.kotlin.text.simpleSingleLine
 import de.honoka.sdk.util.kotlin.text.singleLine
@@ -12,6 +13,31 @@ import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 class KotlinAllTest {
+    
+    @Test
+    fun test5() {
+        HttpUtil.createGet("http://httpbin.org/ip").run {
+            browserApiHeaders()
+            setHttpProxy("127.0.0.1", 10000)
+            timeout(TimeUnit.SECONDS.toMillis(3).toInt())
+            execute()
+        }
+    }
+    
+    @Test
+    fun test4() {
+        val regex = Regex("\\d{1,3}(\\.\\d{1,3}){3}:\\d{1,5}")
+        listOf(
+            "3.3.3.3:3030",
+            "3.3:30",
+            "123.123.123.123:8080",
+            "123.123.123.123:808080",
+            "123.123.123.1.23:8080",
+            "123.123.123.123:"
+        ).forEach {
+            println(regex.matches(it))
+        }
+    }
     
     @Test
     fun test3() {

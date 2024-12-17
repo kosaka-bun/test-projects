@@ -27,12 +27,12 @@ dependencies {
     implementation("com.sobte.cqp:jcq:1.2.7")
     implementation("com.baomidou:mybatis-plus:3.5.2")
     implementation("org.seleniumhq.selenium:selenium-java:4.27.0")
+    implementation("ch.qos.logback:logback-classic:1.4.14")
     "org.projectlombok:lombok:1.18.26".let {
         compileOnly(it)
         annotationProcessor(it)
     }
     //Test
-    implementation("org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}")
     implementation("junit:junit:4.13")
 }
 

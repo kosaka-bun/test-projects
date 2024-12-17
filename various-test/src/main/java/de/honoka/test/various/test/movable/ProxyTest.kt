@@ -56,9 +56,9 @@ object ProxyTest {
     }
     
     fun changeProxy() {
-        ProxyPool.init()
+        ProxyPool.instance.init()
         val proxy = Proxy().apply {
-            httpProxy = ProxyPool.randomProxy
+            httpProxy = ProxyPool.instance.randomProxy
             sslProxy = httpProxy
             println("Proxy: $httpProxy")
         }

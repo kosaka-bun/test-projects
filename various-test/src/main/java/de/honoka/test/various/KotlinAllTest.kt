@@ -4,15 +4,41 @@ import cn.hutool.core.date.DateField
 import cn.hutool.core.date.DateTime
 import cn.hutool.http.HttpUtil
 import cn.hutool.jwt.JWT
+import de.honoka.sdk.util.kotlin.code.log
 import de.honoka.sdk.util.kotlin.net.http.browserApiHeaders
+import de.honoka.sdk.util.kotlin.net.proxy.ProxyPool
 import de.honoka.sdk.util.kotlin.text.forEachWrapper
 import de.honoka.sdk.util.kotlin.text.simpleSingleLine
 import de.honoka.sdk.util.kotlin.text.singleLine
 import de.honoka.sdk.util.kotlin.text.toJsonWrapper
 import org.junit.Test
+import java.net.ServerSocket
 import java.util.concurrent.TimeUnit
 
 class KotlinAllTest {
+    
+    @Test
+    fun test8() {
+        log.info("test")
+        log.debug("test2")
+        log.error("test3")
+    }
+    
+    @Test
+    fun test7() {
+        val server1 = ServerSocket(10000)
+        //val server2 = ServerSocket(10000)
+        //println("$server1 $server2")
+        server1.close()
+        println(server1.isClosed)
+        server1.close()
+    }
+    
+    @Test
+    fun test6() {
+        ProxyPool.instance.init()
+        println(ProxyPool.instance.randomProxy)
+    }
     
     @Test
     fun test5() {

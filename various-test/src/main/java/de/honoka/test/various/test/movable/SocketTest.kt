@@ -5,24 +5,106 @@ package de.honoka.test.various.test.movable
 import cn.hutool.core.util.RandomUtil
 import cn.hutool.http.Header
 import cn.hutool.http.HttpUtil
+import de.honoka.sdk.util.kotlin.code.cast
+import de.honoka.sdk.util.kotlin.code.exception
+import de.honoka.sdk.util.kotlin.code.log
 import de.honoka.sdk.util.kotlin.net.http.browserHeaders
-import de.honoka.sdk.util.kotlin.net.socket.SocketForwarder
 import org.junit.Test
+import java.net.InetSocketAddress
 import java.net.Socket
+import java.nio.ByteBuffer
+import java.nio.channels.SelectionKey
+import java.nio.channels.Selector
+import java.nio.channels.ServerSocketChannel
+import java.nio.channels.SocketChannel
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 object SocketServerTest {
     
-    val urlSet = setOf(
-        "www.baidu.com:80",
-        "www.sogou.com:80"
+    data class ClientConnection(
+        
+        var writable: Boolean = false,
+        
+        var target: SocketChannel? = null
     )
     
-    val socketForwarder = SocketForwarder(urlSet, timeoutOnEmptyForward = 2 * 1000)
+    val executor: ExecutorService = Executors.newFixedThreadPool(1)
+    
+    val serverSocketChannel: ServerSocketChannel = ServerSocketChannel.open().apply {
+        configureBlocking(false)
+        bind(InetSocketAddress(10000))
+    }
+    
+    val selector: Selector = Selector.open().also {
+        serverSocketChannel.register(it, SelectionKey.OP_ACCEPT)
+    }
+    
+    val clients = ConcurrentHashMap<SocketChannel, ClientConnection>()
     
     @JvmStatic
     fun main(args: Array<String>) {
-        println(socketForwarder.port)
+        executor.submit {
+            log.info("Listening...")
+            while(true) {
+                runCatching {
+                    action()
+                }
+            }
+        }
+    }
+    
+    fun action() {
+        val count = selector.select()
+        log.info("Selected $count.")
+        val keys = selector.selectedKeys()
+        keys.forEach {
+            if(!it.isValid) return@forEach
+            runCatching {
+                when {
+                    it.isAcceptable -> accept(it)
+                    it.isReadable -> read(it)
+                    it.isWritable -> writable(it)
+                }
+            }.exceptionOrNull()?.printStackTrace()
+        }
+        keys.clear()
+    }
+    
+    fun accept(key: SelectionKey) {
+        key.channel().cast<ServerSocketChannel>().accept().run {
+            log.info("Client: $this")
+            clients[this] = ClientConnection()
+            configureBlocking(false)
+            register(selector, SelectionKey.OP_READ or SelectionKey.OP_WRITE)
+        }
+    }
+    
+    fun read(key: SelectionKey) {
+        key.channel().cast<SocketChannel>().run {
+            val buffer = ByteBuffer.allocate(1024)
+            try {
+                val read = read(buffer)
+                if(read < 0) exception()
+                val data = buffer.array().sliceArray(0 until read)
+                println(String(data))
+            } catch(t: Throwable) {
+                t.printStackTrace()
+                log.info("Connection closed: $this")
+                clients.remove(this)
+                close()
+            }
+        }
+    }
+    
+    fun writable(key: SelectionKey) {
+        key.channel().cast<SocketChannel>().run {
+            log.info("writable")
+            clients[this]?.writable = true
+            register(selector, SelectionKey.OP_READ)
+        }
     }
 }
 
@@ -35,10 +117,8 @@ object SocketClientTest {
     
     fun action() {
         val socket = Socket("127.0.0.1", 10000)
-        while(true) {
-            socket.getOutputStream().write(ByteArray(RandomUtil.randomInt(70) + 1))
-            TimeUnit.SECONDS.sleep(1)
-        }
+        socket.getOutputStream().write(ByteArray(RandomUtil.randomInt(70) + 1))
+        TimeUnit.SECONDS.sleep(10)
     }
 }
 

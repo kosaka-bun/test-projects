@@ -12,10 +12,30 @@ import de.honoka.sdk.util.kotlin.text.simpleSingleLine
 import de.honoka.sdk.util.kotlin.text.singleLine
 import de.honoka.sdk.util.kotlin.text.toJsonWrapper
 import org.junit.Test
+import java.net.InetSocketAddress
 import java.net.ServerSocket
+import java.nio.channels.ServerSocketChannel
 import java.util.concurrent.TimeUnit
 
 class KotlinAllTest {
+    
+    @Test
+    fun test9() {
+        val server1 = ServerSocketChannel.open().apply {
+            configureBlocking(false)
+            bind(InetSocketAddress(20000))
+        }
+        val server2 = ServerSocketChannel.open().apply {
+            configureBlocking(false)
+            runCatching {
+                bind(InetSocketAddress(20000))
+            }.getOrElse {
+                it.printStackTrace()
+                bind(InetSocketAddress(20001))
+                println("OK")
+            }
+        }
+    }
     
     @Test
     fun test8() {

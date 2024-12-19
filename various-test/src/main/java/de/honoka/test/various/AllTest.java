@@ -5,7 +5,7 @@ import de.honoka.sdk.util.code.CodeUtils;
 import lombok.SneakyThrows;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.RandomAccessFile;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -28,6 +28,7 @@ public class AllTest {
             { 2, 2 }
         });
         Map<Integer, Integer> map2 = (Map<Integer, Integer>) map;
+        //new ConcurrentHashMap<String, String>().entrySet().iterator();
         for(Map.Entry<Integer, Integer> entry : map2.entrySet()) {
             System.out.println((entry.getKey() + 1) + "\t" + (entry.getValue() + 1));
         }

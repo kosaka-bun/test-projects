@@ -1,6 +1,6 @@
 package de.honoka.test.various.old.p4;
 
-import de.honoka.sdk.util.code.HonokaComparator;
+import de.honoka.sdk.util.basic.HonokaComparator;
 import org.junit.Test;
 
 import java.util.Arrays;

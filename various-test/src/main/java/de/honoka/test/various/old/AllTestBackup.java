@@ -1,7 +1,7 @@
 package de.honoka.test.various.old;
 
-import de.honoka.sdk.util.code.ColorfulText;
-import de.honoka.sdk.util.code.HonokaComparator;
+import de.honoka.sdk.util.basic.ColorfulText;
+import de.honoka.sdk.util.basic.HonokaComparator;
 import de.honoka.sdk.util.file.FileUtils;
 import de.honoka.sdk.util.text.TextUtils;
 import de.honoka.sdk.util.various.Retrier;

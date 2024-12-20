@@ -1,6 +1,6 @@
 package de.honoka.test.various.old.p3;
 
-import de.honoka.sdk.util.code.HonokaComparator;
+import de.honoka.sdk.util.basic.HonokaComparator;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package de.honoka.test.various.old.p4;
 
-import de.honoka.sdk.util.code.ColorfulText;
+import de.honoka.sdk.util.basic.ColorfulText;
 import de.honoka.sdk.util.various.ReflectUtils;
 import lombok.SneakyThrows;
 import org.junit.Test;

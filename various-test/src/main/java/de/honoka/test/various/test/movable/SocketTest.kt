@@ -14,7 +14,7 @@ object SocketServerTest {
     
     val urlSet = setOf(
         "www.baidu.com:80",
-        "www.sogou.com:80"
+        "www.sogou.com:80",
     )
     
     val socketForwarder = SocketForwarder(urlSet)
@@ -31,12 +31,14 @@ object SocketClientTest {
     
     @JvmStatic
     fun main(args: Array<String>) {
-        action()
+        repeat(5) {
+            action()
+        }
     }
     
     fun action() {
-        val connection = nioSocketClient.connect("127.0.0.1:10000")
-        repeat(10) {
+        val connection = nioSocketClient.connect("127.0.0.1:10808")
+        repeat(2) {
             nioSocketClient.refresh()
             TimeUnit.MILLISECONDS.sleep(500)
             println(connection)
@@ -46,8 +48,9 @@ object SocketClientTest {
             if(connection.writable) {
                 connection.write("hello1".toByteArray())
             }
+            println(connection.channel)
         }
-        nioSocketClient.close()
+        connection.close()
     }
 }
 
@@ -60,5 +63,22 @@ class SocketHttpClientTest {
             header(Header.HOST, "www.baidu.com")
             println(execute().body())
         }
+    }
+    
+    @Test
+    fun test2() {
+        fun req(port: Int) {
+            HttpUtil.createGet("https://httpbin.org/ip").run {
+                setHttpProxy("127.0.0.1", port)
+                val res = execute()
+                println(res.body())
+                res.close()
+            }
+        }
+        req(10808)
+        req(10808)
+        req(10808)
+        req(10808)
+        req(10808)
     }
 }

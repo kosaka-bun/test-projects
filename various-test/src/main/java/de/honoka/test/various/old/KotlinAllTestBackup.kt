@@ -4,7 +4,6 @@ import cn.hutool.core.date.DateField
 import cn.hutool.core.date.DateTime
 import cn.hutool.http.HttpUtil
 import cn.hutool.jwt.JWT
-import de.honoka.sdk.util.kotlin.basic.HasLogger
 import de.honoka.sdk.util.kotlin.basic.log
 import de.honoka.sdk.util.kotlin.net.http.browserApiHeaders
 import de.honoka.sdk.util.kotlin.net.proxy.ProxyPool
@@ -18,7 +17,7 @@ import java.net.ServerSocket
 import java.nio.channels.ServerSocketChannel
 import java.util.concurrent.TimeUnit
 
-class KotlinAllTestBackup : HasLogger {
+class KotlinAllTestBackup {
     
     @Test
     fun test9() {

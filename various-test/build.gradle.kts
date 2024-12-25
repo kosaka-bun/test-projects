@@ -22,7 +22,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}")
-    implementation("de.honoka.sdk:honoka-kotlin-utils:1.0.2-dev")
+    implementation("de.honoka.sdk:honoka-kotlin-utils:1.1.1-dev")
     implementation("net.java.dev.jna:jna-platform:5.13.0")
     implementation("com.sobte.cqp:jcq:1.2.7")
     implementation("com.baomidou:mybatis-plus:3.5.2")

@@ -7,11 +7,25 @@ import de.honoka.sdk.util.kotlin.basic.removeIf
 import de.honoka.sdk.util.kotlin.io.ByteBufferIoStream
 import de.honoka.sdk.util.kotlin.text.toJsonString
 import org.junit.Test
+import java.net.InetSocketAddress
+import java.net.Socket
+import java.nio.channels.SocketChannel
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class KotlinAllTest {
+    
+    @Test
+    fun test15() {
+        //val socket = Socket("127.0.0.1", 10808)
+        val channel = SocketChannel.open()
+        channel.run {
+            connect(InetSocketAddress("127.0.0.1", 10808))
+            configureBlocking(false)
+        }
+        println()
+    }
     
     @Test
     fun test14() {

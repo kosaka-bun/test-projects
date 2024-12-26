@@ -26,7 +26,6 @@ dependencies {
     implementation("net.java.dev.jna:jna-platform:5.13.0")
     implementation("com.sobte.cqp:jcq:1.2.7")
     implementation("com.baomidou:mybatis-plus:3.5.2")
-    implementation("org.seleniumhq.selenium:selenium-java:4.27.0")
     implementation("ch.qos.logback:logback-classic:1.4.14")
     "org.projectlombok:lombok:1.18.26".let {
         compileOnly(it)

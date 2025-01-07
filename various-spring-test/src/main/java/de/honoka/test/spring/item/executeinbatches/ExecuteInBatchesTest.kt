@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 @Suppress("UNCHECKED_CAST")
 @RequestMapping("/executeInBatches")
 @RestController
-class AllController(private val batchScheduler: BatchScheduler) {
+class ExecuteInBatchesTest(private val batchScheduler: BatchScheduler) {
 
     @GetMapping("/test1")
     fun test1() = batchScheduler.init()

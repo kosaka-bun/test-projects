@@ -2,8 +2,12 @@ package de.honoka.test.various
 
 import cn.hutool.core.date.DateTime
 import cn.hutool.core.date.DateUnit
+import cn.hutool.core.date.DateUtil
 import cn.hutool.core.util.RandomUtil
+import de.honoka.sdk.util.concurrent.ThreadPoolUtils
+import de.honoka.sdk.util.kotlin.basic.log
 import de.honoka.sdk.util.kotlin.basic.removeIf
+import de.honoka.sdk.util.kotlin.concurrent.ScheduledTask
 import de.honoka.sdk.util.kotlin.io.ByteBufferIoStream
 import de.honoka.sdk.util.kotlin.text.toJsonString
 import org.junit.Test
@@ -15,6 +19,42 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class KotlinAllTest {
+    
+    @Test
+    fun test17() {
+        val task = ScheduledTask("1s") {
+            for(i in 1..100) {
+                println(DateUtil.now())
+                runCatching {
+                    Thread.sleep(500)
+                }.getOrElse {
+                    it.printStackTrace()
+                }
+                println(Thread.currentThread().isInterrupted)
+            }
+        }
+        task.startup()
+        TimeUnit.SECONDS.sleep(5)
+        task.close()
+        println("closed")
+    }
+    
+    @Test
+    fun test16() {
+        val runnable = Runnable {
+            log.info("start - ${Thread.currentThread().name}")
+            TimeUnit.SECONDS.sleep(5)
+            log.info("end - ${Thread.currentThread().name}")
+        }
+        val executor = ThreadPoolUtils.newEagerThreadPool(
+            1, 3, 60, TimeUnit.SECONDS
+        )
+        repeat(5) {
+            Thread.sleep(500)
+            executor.submit(runnable)
+        }
+        TimeUnit.SECONDS.sleep(60)
+    }
     
     @Test
     fun test15() {

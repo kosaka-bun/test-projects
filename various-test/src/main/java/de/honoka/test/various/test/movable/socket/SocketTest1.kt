@@ -1,6 +1,6 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
-package de.honoka.test.various.test.movable
+package de.honoka.test.various.test.movable.socket
 
 import cn.hutool.http.Header
 import cn.hutool.http.HttpUtil
@@ -10,7 +10,7 @@ import de.honoka.sdk.util.kotlin.net.socket.SocketForwarder
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
-object SocketServerTest {
+object SocketServerTest1 {
     
     val urlSet = setOf(
         "www.baidu.com:80",
@@ -25,7 +25,7 @@ object SocketServerTest {
     }
 }
 
-object SocketClientTest {
+object SocketClientTest1 {
     
     val nioSocketClient = NioSocketClient()
     
@@ -42,11 +42,11 @@ object SocketClientTest {
             nioSocketClient.refresh()
             TimeUnit.MILLISECONDS.sleep(500)
             println(connection)
-            if(connection.readable) {
-                println(String(connection.read()))
-            }
+            //if(connection.readable) {
+            //    println(String(connection.read()))
+            //}
             if(connection.writable) {
-                connection.write("hello1".toByteArray())
+                connection.tryWrite("hello1".toByteArray())
             }
             println(connection.channel)
         }
@@ -54,7 +54,7 @@ object SocketClientTest {
     }
 }
 
-class SocketHttpClientTest {
+class SocketHttpClientTest1 {
     
     @Test
     fun test1() {

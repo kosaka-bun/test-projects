@@ -6,7 +6,6 @@ import cn.hutool.http.HttpUtil
 import cn.hutool.jwt.JWT
 import de.honoka.sdk.util.kotlin.basic.log
 import de.honoka.sdk.util.kotlin.net.http.browserApiHeaders
-import de.honoka.sdk.util.kotlin.net.proxy.ProxyPool
 import de.honoka.sdk.util.kotlin.text.forEachWrapper
 import de.honoka.sdk.util.kotlin.text.simpleSingleLine
 import de.honoka.sdk.util.kotlin.text.singleLine
@@ -53,13 +52,7 @@ class KotlinAllTestBackup {
         println(server1.isClosed)
         server1.close()
     }
-    
-    @Test
-    fun test6() {
-        ProxyPool.instance.init()
-        println(ProxyPool.instance.randomProxy)
-    }
-    
+
     @Test
     fun test5() {
         HttpUtil.createGet("http://httpbin.org/ip").run {

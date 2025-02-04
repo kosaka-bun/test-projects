@@ -20,6 +20,12 @@ import java.util.concurrent.TimeUnit
 class KotlinAllTest {
     
     @Test
+    fun test18() {
+        val t = RuntimeException(null as String?)
+        throw t
+    }
+    
+    @Test
     fun test17() {
         val task = ScheduledTask("1s") {
             for(i in 1..100) {

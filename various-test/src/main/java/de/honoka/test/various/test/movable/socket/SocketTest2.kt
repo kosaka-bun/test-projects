@@ -3,25 +3,26 @@
 package de.honoka.test.various.test.movable.socket
 
 import cn.hutool.http.HttpUtil
+import de.honoka.sdk.util.kotlin.basic.log
+import de.honoka.sdk.util.kotlin.basic.off
 import de.honoka.sdk.util.kotlin.net.socket.NioSocketClient
-import de.honoka.sdk.util.kotlin.net.socket.NioSocketServer
 import de.honoka.sdk.util.kotlin.net.socket.SocketConnection
+import de.honoka.sdk.util.kotlin.net.socket.SocketForwarder
+import de.honoka.sdk.util.kotlin.net.socket.selector.StatusSelector
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 object SocketServerTest2 {
 
-    val server = object : NioSocketServer() {
-
-        override fun onReadable(connection: SocketConnection) {
-            println(String(connection.read()))
-            connection.readableReported = true
-        }
+    init {
+        StatusSelector::class.log.off()
+        SocketConnection::class.log.off()
+        NioSocketClient::class.log.off()
     }
 
     @JvmStatic
     fun main(args: Array<String>) {
-        println(server.port)
+        //println(socketForwarder.port)
         TimeUnit.MINUTES.sleep(60)
     }
 }
@@ -43,9 +44,9 @@ object SocketClientTest2 {
             nioSocketClient.refresh()
             TimeUnit.MILLISECONDS.sleep(500)
             println(connection)
-            //if(connection.readable) {
-            //    println(String(connection.read()))
-            //}
+            if(connection.readable) {
+                println(String(connection.read()))
+            }
             if(connection.writable) {
                 connection.tryWrite("hello1".toByteArray())
             }
@@ -57,10 +58,14 @@ object SocketClientTest2 {
 
 class SocketHttpClientTest2 {
 
+    val proxy by lazy { SocketForwarder(setOf("127.0.0.1:10808")) }
+
     @Test
     fun test1() {
         HttpUtil.createGet("http://httpbin.org/ip").run {
-            setHttpProxy("127.0.0.1", 10000)
+            //setHttpProxy("127.0.0.1", 10000)
+            //setHttpProxy("127.0.0.1", 10808)
+            setHttpProxy("127.0.0.1", proxy.port)
             val res = execute()
             println(res.body())
             res.close()
@@ -69,11 +74,15 @@ class SocketHttpClientTest2 {
 
     @Test
     fun test2() {
-        HttpUtil.createGet("https://httpbin.org/ip").run {
-            setHttpProxy("127.0.0.1", 10000)
-            val res = execute()
-            println(res.body())
-            res.close()
+        repeat(3) {
+            HttpUtil.createGet("https://httpbin.org/ip").run {
+                //setHttpProxy("127.0.0.1", 10000)
+                //setHttpProxy("127.0.0.1", 10808)
+                setHttpProxy("127.0.0.1", proxy.port)
+                val res = execute()
+                println(res.body())
+                res.close()
+            }
         }
     }
 }

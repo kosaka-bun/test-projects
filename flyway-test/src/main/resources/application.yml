@@ -14,7 +14,8 @@ spring:
     locations: classpath:flyway/sql
     #
     # 若数据库非空，且库中不存在flyway的更新记录表（默认为flyway_schema_history），是否先创建
-    # 更新记录表，然后基于baseline-version配置项所设定的版本号开始依次执行。
+    # 更新记录表，然后基于baseline-version配置项所设定的版本号的下一个版本号开始依次执行，若后
+    # 一个版本号不存在，则寻找最近的一个版本号。
     #
     # 若baseline-on-migrate设置为false，则当数据库非空，且库中不存在flyway的更新记录表时，将
     # 在Spring Boot启动时抛出异常。
@@ -22,6 +23,10 @@ spring:
     # 当数据库为空时，flyway在任何情况下都会从第一个版本的SQL文件开始执行。
     #
     baseline-on-migrate: true
+    #
+    # 若数据库非空，且库中不存在flyway的更新记录表，则在更新记录表中插入一条记录，将当前数据库
+    # 的状态视为已处于baseline-version所指定的版本号。
+    #
     baseline-version: 1
     #
     # 是否在执行前校验SQL语法与文件内容是否被更改（通过flyway的更新记录表中记录的文件的checksum

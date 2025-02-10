@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.spring") version "1.9.23"
+    kotlin("jvm") version "1.8.10"
+    kotlin("plugin.spring") version "1.8.10"
 }
 
 group = "de.honoka.test"
@@ -19,8 +19,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("cn.hutool:hutool-all:5.8.18")
-    implementation("de.honoka.sdk:honoka-framework-utils:1.0.5-dev")
+    implementation("de.honoka.sdk:honoka-spring-boot-starter:1.0.2-dev")
     implementation("org.apache.groovy:groovy")
     "org.projectlombok:lombok:1.18.26".let {
         compileOnly(it)

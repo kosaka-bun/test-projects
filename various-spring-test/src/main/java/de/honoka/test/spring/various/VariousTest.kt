@@ -1,7 +1,7 @@
 package de.honoka.test.spring.various
 
 import cn.hutool.json.JSONObject
-import de.honoka.sdk.util.framework.web.WebUtils.clientRealIp
+import de.honoka.sdk.spring.starter.core.web.clientRealIp
 import jakarta.servlet.http.HttpServletRequest
 import org.jsoup.Jsoup
 import org.springframework.web.bind.annotation.GetMapping

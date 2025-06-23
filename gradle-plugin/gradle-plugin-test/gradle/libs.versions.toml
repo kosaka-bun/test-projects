@@ -1,0 +1,13 @@
+[versions]
+# project modules version
+root = "1.0.0-dev"
+
+# dependencies version
+kotlin = "1.8.10"
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+dependency-management = "io.spring.dependency-management:1.1.6"
+
+[libraries]
+kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }

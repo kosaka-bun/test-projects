@@ -2,6 +2,7 @@ package de.honoka.gradle.plugin.demo
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.internal.project.ProjectStateInternal
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -17,7 +18,7 @@ class DemoPlugin : Plugin<Project> {
         val props = project.extensions.create("demoPlugin", DemoPluginProperties::class.java)
         project.tasks.register("hello") {
             doLast {
-                println("Hello from DemoPlugin. ${props.message}")
+                println("(${props.project}) Hello from DemoPlugin. ${props.message}")
                 props.otherMessage?.let {
                     println("The other message is: ${props.otherMessage}")
                 }
@@ -27,11 +28,11 @@ class DemoPlugin : Plugin<Project> {
     }
 }
 
-interface DemoPluginProperties {
+abstract class DemoPluginProperties(internal val project: Project) {
 
-    var message: String?
+    var message: String? = null
 
-    var otherMessage: String?
+    var otherMessage: String? = null
 
     fun otherMessage(str: String) {
         otherMessage = str
@@ -50,4 +51,13 @@ fun DemoPluginProperties.extFun() {}
 object ExtObj {
 
     var message: String? = null
+}
+
+fun Project.showAllProjectsState() {
+    rootProject.allprojects.forEach {
+        println("$it ${(it.state as ProjectStateInternal).isConfiguring}")
+    }
+    println(Thread.currentThread().name)
+    println("$project isRoot: ${project == rootProject}")
+    println("-----".repeat(5))
 }

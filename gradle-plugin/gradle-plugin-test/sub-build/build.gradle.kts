@@ -49,7 +49,7 @@ demoPlugin {
 
 showAllProjectsState()
 
-//ExtObj.message = "ext"
+ExtObj.message = "ext"
 
 subprojects {
     apply(plugin = "de.honoka.gradle.plugin.demo")

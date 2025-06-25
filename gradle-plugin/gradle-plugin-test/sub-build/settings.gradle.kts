@@ -16,9 +16,14 @@ pluginManagement {
     }
 }
 
-rootProject.name = "gradle-plugin-test"
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
+}
 
-include("project1")
-include("project1:project2")
+rootProject.name = "gradle-plugin-test-sub-build"
 
-includeBuild("sub-build")
+include("project3")

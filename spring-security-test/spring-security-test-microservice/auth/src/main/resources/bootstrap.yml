@@ -15,12 +15,6 @@ spring:
   datasource:
     driver-class-name: org.sqlite.JDBC
     url: jdbc:sqlite:./data/${spring.application.name}.db
-  data:
-    redis:
-      host: vm.honoka.de
-      port: 6379
-      password: 123456
-      database: 0
   jpa:
     show-sql: true
     hibernate:

@@ -1,5 +1,5 @@
 ###
-POST {{auth_base_url}}/user/info
+POST {{auth_base_url}}/user/register
 Content-Type: application/json
 
 {

@@ -1,0 +1,34 @@
+###
+POST {{auth_base_url}}/user/register
+Content-Type: application/json
+
+{
+  "username": "test_user1",
+  "password": "abc123"
+}
+
+###
+GET {{auth_base_url}}/user/info/admin
+
+###
+POST {{auth_base_url}}/user/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123456"
+}
+
+> {% client.global.set('oauth2_token', response.body['data']['access_token']) %}
+
+###
+GET {{business1_base_url}}/res1
+Authorization: Bearer {{oauth2_token}}
+
+###
+GET {{business1_base_url}}/res2
+Authorization: Bearer {{oauth2_token}}
+
+###
+GET {{business2_base_url}}/res1
+Authorization: Bearer {{oauth2_token}}

@@ -1,38 +1,20 @@
 package de.honoka.test.spring.security.auth.service
 
+import cn.hutool.http.HttpUtil
+import cn.hutool.json.JSONObject
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import de.honoka.test.spring.security.auth.entity.User
 import de.honoka.test.spring.security.auth.mapper.UserMapper
-import de.honoka.test.spring.security.auth.security.SecurityConfig
 import jakarta.annotation.PostConstruct
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import java.net.URI
 
 @Service
-class UserService(private val userMapper: UserMapper) : ServiceImpl<UserMapper, User>(), UserDetailsService {
+class UserService(private val userMapper: UserMapper) : ServiceImpl<UserMapper, User>() {
 
-    class UserDetailsImpl(private val user: User) : UserDetails {
-
-        override fun getUsername(): String? = user.username
-
-        override fun getPassword(): String? = SecurityConfig.passwordEncoder.encode(user.password)
-
-        override fun getAuthorities(): MutableCollection<out GrantedAuthority> = arrayListOf(
-            SimpleGrantedAuthority("USER")
-        )
-
-        override fun isAccountNonExpired(): Boolean = true
-
-        override fun isAccountNonLocked(): Boolean = true
-
-        override fun isCredentialsNonExpired(): Boolean = true
-
-        override fun isEnabled(): Boolean = true
-    }
+    @Value("\${server.port}")
+    private var serverPort: Int = 0
 
     @PostConstruct
     fun init() {
@@ -45,8 +27,35 @@ class UserService(private val userMapper: UserMapper) : ServiceImpl<UserMapper, 
         }
     }
 
-    override fun loadUserByUsername(username: String?): UserDetails = run {
-        val user = userMapper.findByUsername(username) ?: throw UsernameNotFoundException(username)
-        UserDetailsImpl(user)
+    fun login(params: JSONObject): String {
+        val user = baseMapper.findByUsername(params.getStr("username"))
+        if(user == null || user.password != params.getStr("password")) {
+            throw RuntimeException("用户名或密码错误")
+        }
+        var url = "http://localhost:$serverPort/oauth2/authorize?response_type=code&client_id=oauth2-client1&scope=all" +
+            "&redirect_uri=https%3A%2F%2Fwww.baidu.com"
+        var res = HttpUtil.createGet(url).run {
+            setFollowRedirects(false)
+            URI.create(execute().header("Location")).rawQuery
+        }
+        if(res.contains("state=")) {
+            url = "http://localhost:$serverPort/oauth2/authorize"
+            res = HttpUtil.createPost(url).run {
+                setFollowRedirects(false)
+                body(res)
+                URI.create(execute().header("Location")).rawQuery
+            }
+        }
+        url = "http://localhost:$serverPort/oauth2/token"
+        res = HttpUtil.createPost(url).run {
+            /*
+             * Authorization的值为SecurityConfig中所配置的client的clientId与clientSecret（原文），
+             * 用冒号拼接，然后base64编码
+             */
+            auth("Basic b2F1dGgyLWNsaWVudDE6MTIzNDU2")
+            body("$res&grant_type=authorization_code&redirect_uri=https%3A%2F%2Fwww.baidu.com")
+            execute().body()
+        }
+        return res
     }
 }
